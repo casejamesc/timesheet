@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Time in:</strong>
+  <%= @shift.clock_in %>
+</p>
+
+<p>
+  <strong>Time out:</strong>
+  <%= @shift.clock_out %>
+</p>
+
+<p>
+  <strong>Date in:</strong>
+  <%= @shift.date_in %>
+</p>
+
+<p>
+  <strong>Date out:</strong>
+  <%= @shift.date_out %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @shift.user_id %>
+</p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @shift.project_id %>
+</p>
+
+<p>
+  <strong>Task:</strong>
+  <%= @shift.task_id %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @shift.notes %>
+</p>
+
+<p>
+  <strong>Add cost:</strong>
+  <%= @shift.add_cost %>
+</p>
+
+<%= link_to 'Edit', edit_shift_path(@shift) %> |
+<%= link_to 'Back', shifts_path %>

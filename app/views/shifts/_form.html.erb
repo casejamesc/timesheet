@@ -1,0 +1,51 @@
+<div class="panel-body">
+  <%= form_for(@shift) do |f| %>
+  <%= f.hidden_field :user_id, value: @current_user %>
+
+  <% if @shift.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@shift.errors.count, "error") %> prohibited this shift from being saved:</h2>
+
+    <ul>
+      <% @shift.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+  <div class="field form-group">
+    <%= f.label :clock_in %><br>
+    <%= f.date_field :date_in, class: 'form-control' %>
+    <%= f.time_field :clock_in, class: 'form-control' %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :clock_out %><br>
+    <%= f.date_field :date_out, class: 'form-control' %>
+    <%= f.time_field :clock_out, class: 'form-control' %>
+  </div>
+  <div class="field form-group project-group">
+    <%= f.label :project_id %><br>
+    <%= f.collection_select(:project_id, @projects, :id, :name, class: 'form-control') %>
+  </div>
+  <div class="field form-group task-group">
+    <%= f.label :task_id %><br>
+    <%= f.collection_select(:task_id, @tasks, :id, :name, class: 'form-control') %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes, class: 'form-control' %>
+  </div>
+  <div class="field form-group add-cost-group">
+    <%= f.label :add_cost %><br>
+    <div class="input-group">
+      <span class="input-group-addon">$</span>
+      <%= f.text_field :add_cost, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="submit-wrapper">
+    <%= f.submit 'submit', class: 'btn btn-default' %>
+  </div>
+
+  <% end %>
+
+</div>

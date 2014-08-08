@@ -1,0 +1,113 @@
+// FONT AWESOME
+@import url( http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css );
+// GOOGLE FONTS
+@import url( http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic );
+@import url( http://fonts.googleapis.com/css?family=Kaushan+Script );
+@import url(http://fonts.googleapis.com/css?family=Architects+Daughter);
+
+@font-face {
+  font-family: 'Museo';
+  src: url('../fonts/Museo300-Regular-webfont.eot');
+  src: url('../fonts/Museo300-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/Museo300-Regular-webfont.woff') format('woff'),
+       url('../fonts/Museo300-Regular-webfont.ttf') format('truetype'),
+       url('../fonts/Museo300-Regular-webfont.svg#Museo') format('svg');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Museo';
+  src: url('../fonts/Museo500-Regular-webfont.eot');
+  src: url('../fonts/Museo500-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/Museo500-Regular-webfont.woff') format('woff'),
+       url('../fonts/Museo500-Regular-webfont.ttf') format('truetype'),
+       url('../fonts/Museo500-Regular-webfont.svg#Museo') format('svg');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NovecentoWB';
+  src: url('../fonts/NovecentoWB-webfont.eot');
+  src: url('../fonts/NovecentoWB-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NovecentoWB-webfont.woff') format('woff'),
+       url('../fonts/NovecentoWB-webfont.ttf') format('truetype'),
+       url('../fonts/NovecentoWB-webfont.svg#NovecentoWB') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ============ CLASSES ============ */
+.text-xxx {
+  font-size: 55px;
+  letter-spacing: 1px;
+}
+.text-xx {
+  font-size: 50px;
+  letter-spacing: .5px;
+}
+.text-x {
+  font-size: 32px;
+}
+.text-l {
+  font-size: 20px;
+}
+.text-m {
+  font-size: 18px;
+}
+.text-s {
+  font-size: 14px;
+}
+.text-xs {
+  font-size: 12px;
+}
+
+.sans {
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+  font-weight: 300;
+}
+
+.museo {
+  font-family: Museo, Arial, Helvetica, sans-serif;
+  font-weight: 300;
+}
+
+.novecento {
+  font-family: Novecento, Arial, Helvetica, sans-serif;
+}
+
+.arch {
+  font-family: 'Architects Daughter', Arial, Helvetica, sans-serif;
+  font-weight: 300;
+}
+
+/* ============ ELEMENT ============ */
+body, div, p, span, input, textarea, button {
+  @extend .sans;
+  @extend .text-m;
+  line-height: 1.5;
+  color: $shade3;
+}
+
+input, textarea {
+  line-height: 1.3;
+}
+
+h1 {
+  @extend .text-xx;
+  @extend .sans;
+}
+h2 {
+  @extend .text-xx;
+}
+h3 {
+  @extend .text-x;
+}
+h4 {
+  @extend .text-l;
+}
+h5 {
+  @extend .text-m;
+}
+h6 {
+  @extend .text-s;
+}

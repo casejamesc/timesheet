@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  time_in: 2014-08-05 15:12:11
+  time_out: 2014-08-05 15:12:11
+  user_id: 1
+  project_id: 1
+  task_id: 1
+  notes: MyText
+  add_cost: 9.99
+
+two:
+  time_in: 2014-08-05 15:12:11
+  time_out: 2014-08-05 15:12:11
+  user_id: 1
+  project_id: 1
+  task_id: 1
+  notes: MyText
+  add_cost: 9.99

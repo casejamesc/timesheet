@@ -1,0 +1,256 @@
+@import url( http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css );
+
+/* =============== BY ELEMENT ============== */
+*, div, p, span, blockquote, h1, h2, h3, h4, h5, h6 {
+	margin: 0px;
+	border: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+html, body, .sticky-wrapper, .main-header, .main-footer {
+	min-width: 980px;
+}
+
+li {
+	list-style-type: none;
+}
+
+a {
+	text-decoration: none;
+	outline: 0;
+}
+
+a:hover {
+	/*text-decoration: underline;*/
+}
+
+button, input[type="submit"] {
+	cursor: pointer;
+}
+
+// allow gradients to fill entire window
+html {
+	height: 100%;
+}
+body {
+	// height: 100%;
+	// background-attachment: fixed;
+}
+/* =============== BY CLASS ============== */
+
+/* ======= POSITION/SIZING ======= */
+.clearfix {
+	&:after {
+		visibility: hidden;
+		display: block;
+		content: ".";
+		clear: both;	
+		line-height: 0;
+		height: 0;
+	}
+}
+
+.center {
+	display: block;
+	margin: 0 auto;
+}
+
+.center860 {
+	display: block;
+	width: 860px;
+	margin: 0 auto;
+}
+
+.center960 {
+	display: block;
+	width: 960px;
+	margin: 0 auto;
+}
+
+.center-semi-responsive {
+	width: 95%;
+	min-width: 960px;
+	margin: 0 auto;
+}
+
+.row {
+	@extend .clearfix;
+}
+
+.col {
+	float: left;
+}
+
+/* ======= HOR-LISTS ======= */
+.h-list {
+	@extend .clearfix;
+	li {
+		float: left;
+		padding: 0 8px;
+		&:first-of-type {
+			padding-left: 0;
+		}
+		&:last-of-type {
+			padding-right: 0;
+		}
+	}
+}
+
+/* ======= LINKS ======= */
+a.non-link, input.non-link {
+	pointer-events: none;
+	cursor: default;
+	color: hsl(0, 0%, 60%);
+}
+
+a.disabled, input.disabled {
+	pointer-events: none;
+	cursor: default;
+	color: hsl(0, 0%, 60%);
+}
+
+/* ============ FORMS ============ */
+div.custom-photo {
+	position: relative;
+	width: 90px;
+	border-radius: $br-s;
+	background: url(../img/camera.png) no-repeat 5px 9px;
+	background-size: 90% auto;
+}
+
+input.custom-photo {
+	position: relative;
+	top: 2px;
+	opacity: 0;
+	width: 90px;
+	height: 90px;
+	cursor: pointer;
+}
+
+/*SMALL*/
+div.custom-file {
+	position: relative;
+	display: inline-block;
+	width: 27px;
+	background: url(../img/icon-vin-app-w.png) no-repeat 0 0;
+	background-size: 100% auto;
+}
+
+input.custom-file  {
+	position: relative;
+	top: 0;
+	opacity: 0;
+	width: 27px;
+	height: 27px;
+	overflow: hidden; /*without this: chrome makes default input area clickable, even though it isn't visible*/
+	cursor: pointer;
+}
+
+div.custom-checkbox {
+	position: relative;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+ 	background-color: hsl(0, 0%, 100%);
+}	
+
+div.custom-checkbox.checked {
+	background: url(../img/checkbox-check.png) no-repeat center center, hsl(0, 0%, 100%);
+	background-size: 70% auto;
+}
+
+input.custom-checkbox {
+	position: relative;
+	top: 0;
+	vertical-align: baseline;
+	opacity: 0;
+	width: 20px;
+	height: 20px;
+}
+
+div.custom-radio {
+	position: relative;
+	display: inline-block;
+	width: 23px;
+	height: 23px;
+	background: url(../img/radio-unchecked.png) no-repeat;
+	background-size: 100% auto;
+}
+
+div.custom-radio.checked {
+	background: url(../img/radio-checked.png) no-repeat;
+	background-size: 100% auto;
+}
+
+input.custom-radio {
+	position: relative;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	width: 23px;
+	height: 23px;
+}
+
+div.custom-radio + label {
+	vertical-align: top;
+}
+
+div.custom-radio-ns {
+	position: relative;
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url(../img/radio-unchecked.png) no-repeat;
+	background-size: 100% auto;
+}
+
+input.custom-radio-ns {
+	position: relative;
+	top: 0;
+	opacity: 0;
+	width: 25px;
+	height: 25px;
+}
+
+/* ============ SHADOWS ============ */
+.shadow-top {
+  height: 20px;
+  margin-bottom: -20px;
+  background: url(../img/shadow-top.png) no-repeat;
+  background-size: 100% 100%;
+}
+
+.shadow-bottom {
+  height: 20px;
+  margin-top: -20px;
+  background: url(../img/shadow-bottom.png);
+  background-size: 100% 100%;
+}
+
+.shadow-left {
+  width: 20px;
+  height: 100%;
+  margin-right: -20px;
+  background: url(../img/shadow-left.png) no-repeat;
+  background-size: 100% 100%;
+}
+
+.shadow-right {
+  width: 20px;
+  height: 100%;
+  margin-left: -20px;
+  background: url(../img/shadow-right.png);
+  background-size: 100% 100%;
+}
+
+/* ======== CONCAVE ======= */
+.shadow-concave-bottom {
+  height: 20px;
+  margin-top: -20px;
+  background: url(../img/shadow-concave-left.png) top left no-repeat, url(../images/shadow-concave-right.png) top right no-repeat;
+  background-size: 30% 100%, 30% 100%;
+}
+
+

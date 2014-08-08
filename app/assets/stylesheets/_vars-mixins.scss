@@ -1,0 +1,139 @@
+//=========== VARS ============
+//=== BORDER-RADIUS === 
+$br-l: 10px;
+$br-m: 6px;
+$br-s: 3px;
+
+//=== INPUTS === 
+$input-height: 40px;
+
+//=========== MIXINS ============
+//=== BORDERS === 
+@mixin h-lh($height) {
+  height: $height;
+  line-height: $height;
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+}
+
+//=== BORDERS === 
+@mixin border($size:3px) {
+  border: $size solid $shade1;
+}
+
+//=== SHADOWS === 
+@mixin shadow($size:10px) {
+  box-shadow: 0 0 $size 0 hsla(0, 0%, 0%, .3);
+}
+
+@mixin shadow-hor($height:20px) {
+  height: $height;
+  background-size: 100% 100%;
+
+  &.convex-top {
+    margin-top: -$height;
+    background: url(../img/convex-shadow-top.png);
+  }
+  &.convex-bottom {
+    margin-bottom: -$height;
+    background: url(../img/convex-shadow-bottom.png);
+  }
+  &.concave-top {
+    margin-top: -$height;
+    background: url(../img/concave-shadow-top.png);
+  }
+  &.concave-bottom {
+    margin-bottom: -$height;
+    background: url(../img/concave-shadow-bottom.png);
+  }
+}
+
+@mixin shadow-sides($width:20px) {
+  padding-left: $width;
+  padding-right: $width;
+  background-size: 100% 100%;
+  &.convex {
+    background: url(../img/convex-shadow-l.png) top left no-repeat, url(../img/convex-shadow-r.png) top right no-repeat; 
+  }
+  &.concave {
+    background: url(../img/concave-shadow-l.png) top left no-repeat, url(../img/concave-shadow-r.png) top right no-repeat; 
+  }
+}
+
+//=========== CLASSES ============
+//=== COLORS ===
+$color1: hsl(0, 0%, 100%); //WHITE
+$color2: hsl(9, 66%, 45%); //RED  
+$color3: hsl(9, 66%, 45%); //BLUE
+$color4: hsl(205, 40%, 67%); //LIGHTBLUE  
+$color5: hsl(51, 98%, 82%); //LIGHTYELLOW
+
+//=== SHADES ===
+$shade1: hsl(0, 0%, 100%); //WHITE
+$shade2: hsla(0, 0%, 100%, .9); //LIGHT  
+$shade3: hsl(0, 0%, 30%); //MEDIUM
+$shade4: hsl(0, 0%, 20%); //DARK 
+
+//=== GRADIENTS ===
+//LIGHT
+.gradient1 {
+  background-image: -webkit-gradient(linear, 0 100%, 0 0, from(hsl(0, 0%, 93%)), color-stop(0.5, hsl(0, 0%, 99%)), to(hsl(0, 0%, 100%)));
+  background-image: -webkit-linear-gradient(90deg, hsl(0, 0%, 93%) 0%, hsl(0, 0%, 99%) 50%, hsl(0, 0%, 100%) 100%);
+  background-image: -moz-linear-gradient(90deg, hsl(0, 0%, 93%) 0%, hsl(0, 0%, 99%) 50%, hsl(0, 0%, 100%) 100%);
+  background-image: -o-linear-gradient(90deg, hsl(0, 0%, 93%) 0%, hsl(0, 0%, 99%) 50%, hsl(0, 0%, 100%) 100%);
+  background-image: linear-gradient(0deg, hsl(0, 0%, 93%) 0%, hsl(0, 0%, 99%) 50%, hsl(0, 0%, 100%) 100%);
+  &:hover {
+    background-image: -webkit-gradient(linear, 0 100%, 0 0, from(hsl(0, 0%, 100%)), color-stop(0.5, hsl(0, 0%, 99%)), to(hsl(0, 0%, 93%)));
+    background-image: -webkit-linear-gradient(90deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 99%) 50%, hsl(0, 0%, 93%) 100%);
+    background-image: -moz-linear-gradient(90deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 99%) 50%, hsl(0, 0%, 93%) 100%);
+    background-image: -o-linear-gradient(90deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 99%) 50%, hsl(0, 0%, 93%) 100%);
+    background-image: linear-gradient(0deg, hsl(0, 0%, 100%) 0%, hsl(0, 0%, 99%) 50%, hsl(0, 0%, 93%) 100%);
+  }
+}
+//RED 
+.gradient2 {
+  background-image: -webkit-gradient(linear, 0 100%, 0 0, from(hsl(359, 73%, 27%)), color-stop(0.5, hsl(9, 66%, 40%)), to(hsl(9, 66%, 45%)));
+  background-image: -webkit-linear-gradient(90deg, hsl(359, 73%, 27%) 0%, hsl(9, 66%, 40%) 50%, hsl(9, 66%, 45%) 100%);
+  background-image: -moz-linear-gradient(90deg, hsl(359, 73%, 27%) 0%, hsl(9, 66%, 40%) 50%, hsl(9, 66%, 45%) 100%);
+  background-image: -o-linear-gradient(90deg, hsl(359, 73%, 27%) 0%, hsl(9, 66%, 40%) 50%, hsl(9, 66%, 45%) 100%);
+  background-image: linear-gradient(0deg, hsl(359, 73%, 27%) 0%, hsl(9, 66%, 40%) 50%, hsl(9, 66%, 45%) 100%);
+  &:hover {
+    background-image: -webkit-gradient(linear, 0 100%, 0 0, from(hsl(9, 66%, 45%)), color-stop(0.5, hsl(9, 66%, 40%)), to(hsl(359, 73%, 27%)));
+    background-image: -webkit-linear-gradient(90deg, hsl(9, 66%, 45%) 0%, hsl(9, 66%, 40%) 50%, hsl(359, 73%, 27%) 100%);
+    background-image: -moz-linear-gradient(90deg, hsl(9, 66%, 45%) 0%, hsl(9, 66%, 40%) 50%, hsl(359, 73%, 27%) 100%);
+    background-image: -o-linear-gradient(90deg, hsl(9, 66%, 45%) 0%, hsl(9, 66%, 40%) 50%, hsl(359, 73%, 27%) 100%);
+    background-image: linear-gradient(0deg, hsl(9, 66%, 45%) 0%, hsl(9, 66%, 40%) 50%, hsl(359, 73%, 27%) 100%);
+  }
+}
+//BLUE
+.gradient3 {
+  background-image: -webkit-gradient(linear, 0 100%, 0 0, from(hsl(212,84%,32%)), to(hsl(204,65%,48%)));
+  background-image: -webkit-linear-gradient(90deg, hsl(212,84%,32%) 0%, hsl(204,65%,48%) 100%);
+  background-image: -moz-linear-gradient(90deg, hsl(212,84%,32%) 0%, hsl(204,65%,48%) 100%);
+  background-image: -o-linear-gradient(90deg, hsl(212,84%,32%) 0%, hsl(204,65%,48%) 100%);
+  background-image: linear-gradient(0deg, hsl(212,84%,32%) 0%, hsl(204,65%,48%) 100%);
+  &:hover {
+    background-image: -webkit-gradient(linear, 0 100%, 0 0, from(hsl(204,65%,48%)), to(hsl(212,84%,32%)));
+    background-image: -webkit-linear-gradient(90deg, hsl(204,65%,48%) 0%, hsl(212,84%,32%) 100%);
+    background-image: -moz-linear-gradient(90deg, hsl(204,65%,48%) 0%, hsl(212,84%,32%) 100%);
+    background-image: -o-linear-gradient(90deg, hsl(204,65%,48%) 0%, hsl(212,84%,32%) 100%);
+    background-image: linear-gradient(0deg, hsl(204,65%,48%) 0%, hsl(212,84%,32%) 100%);
+  }
+}
+//LIGHTBLUE  
+.gradient4 {
+  background-image: -webkit-linear-gradient(0deg, hsl(65, 5%, 61%) 0%, hsl(69, 4.7%, 70%) 100%);
+  background-image: -moz-linear-gradient(0deg, hsl(65, 5%, 61%) 0%, hsl(69, 4.7%, 70%) 100%);
+  background-image: -ms-linear-gradient(0deg, hsl(65, 5%, 61%) 0%, hsl(69, 4.7%, 70%) 100%);
+  background-image: -o-linear-gradient(0deg, hsl(65, 5%, 61%) 0%, hsl(69, 4.7%, 70%) 100%);
+  background-image: linear-gradient(0deg, hsl(65, 5%, 61%) 0%, hsl(69, 4.7%, 70%) 100%);
+  &:hover {
+    background-image: -webkit-linear-gradient(0deg, hsl(69, 4.7%, 70%) 0%, hsl(65, 5%, 61%) 100%);
+    background-image: -moz-linear-gradient(0deg, hsl(69, 4.7%, 70%) 0%, hsl(65, 5%, 61%) 100%);
+    background-image: -ms-linear-gradient(0deg, hsl(69, 4.7%, 70%) 0%, hsl(65, 5%, 61%) 100%);
+    background-image: -o-linear-gradient(0deg, hsl(69, 4.7%, 70%) 0%, hsl(65, 5%, 61%) 100%);
+    background-image: linear-gradient(0deg, hsl(69, 4.7%, 70%) 0%, hsl(65, 5%, 61%) 100%);
+  }
+}
+
+

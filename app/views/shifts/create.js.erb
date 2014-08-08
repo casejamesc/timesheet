@@ -1,0 +1,42 @@
+$(function() {  
+  <% shift = @shift %>
+
+  var newRow = $('<tr data-shift-id="<%= shift.id %>">' +
+    '<td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>' +
+    '<td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>' +
+    '<td class="project"><%= shift.project.name if shift.project %></td>' +
+    '<td class="task"><%= shift.task.name if shift.task %></td>' +
+    '<td class="time"><%= shift.time if shift.time %></td>' +
+    '<td class="pay"><%= number_to_currency(shift.pay) %></td>' +
+    '<td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), shift, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>' +
+    '</tr>');
+
+  $('.shift-table tbody').append(newRow);
+  newRow.find('td').effect('highlight', 1000).on('click', function() {
+    document.location="<%= edit_shift_path(shift) %>";
+  });
+
+  // ********* WONT WORK WITH DELEGATE! FIGURE OUT WHY *********
+  $('.shift-table .delete').on('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    $.ajax( {
+      type: 'delete',
+      url: $(this).attr('href'),
+      data: { },
+      dataType: 'json',
+      error: function() {
+        alert('error');
+      },
+      success: function(json) {
+        $('tr[data-shift-id="' + json.id + '"]').children('td').effect('highlight', {color: 'hsl(0, 66%, 76%)'}, 700, function() {
+          $(this).remove();
+        });
+      }
+    });
+
+  });
+
+});
+

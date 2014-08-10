@@ -1,8 +1,8 @@
-<h1>Shifts: <%= @filter.titleize %></h1>
+<h1><%= @filter.titleize + ' (' + @date1.strftime("%m/%-d/%Y") + ' - ' + @date2.strftime("%m/%-d/%Y") + ')' %></h1>
 
 <div class="sidebar">
   <div class="field form-group filter-group">
-    <%= label_tag :filter %>
+    <%= label_tag 'Select' %>
     <%= select_tag( :filter, options_for_select( [["Daily", "daily"],["Weekly", "weekly"],["2 weeks", "bi-weekly"],['Monthly', "monthly"]] ) ) %>
   </div>
   
@@ -13,34 +13,70 @@
 <table class="shift-table table table-striped table-hover">
   <thead>
     <tr>
+      <th class="edit"></th>
+      <th class="date-in">Date</th>
       <th class="clock-in">Clock in</th>
       <th class="clock-out">Clock out</th>
       <th class="project">Project</th>
       <th class="task">Task</th>
-      <th class="time">Hours</th>
+      <th class="hours">Hours</th>
       <th class="pay">Pay</th>
       <th class="action"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @shifts.each do |shift| %>
-      <tr onClick="document.location='<%= edit_shift_path(shift) %>'" data-shift-id="<%= shift.id %>">
-        <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
-        <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
-        <td class="project"><%= shift.project.name if shift.project %></td>
-        <td class="task"><%= shift.task.name if shift.task %></td>
-        <td class="time"><%= shift.time if shift.time %></td>
-        <td class="pay"><%= number_to_currency(shift.pay) %></td>
-        <td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), shift, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>
-      </tr>
+    <% while @date1 <= @date2 do %>
+      <% dailyShifts = @shifts.by_day(@date1) %>
+      <% if dailyShifts.count == 0 %>
+        <tr>
+          <td><%= @date1.strftime("%m/%-d/%Y") %></td>
+          <td><em>No shifts</em></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <% else %>
+      <% shift = dailyShifts.first %>
+        <tr data-id="<%= shift.id %>">
+          <td class="edit"><%= link_to image_tag("icon-edit.png"), edit_shift_path(shift) %></td>
+          <td class="date-in"><%= shift.date_in.strftime("%m/%-d/%Y") if shift.date_in %></td>
+          <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
+          <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
+          <td class="project"><%= link_to shift.project.name, edit_project_path(shift.project) %></td>
+          <td class="project"><%= link_to shift.task.name, edit_task_path(shift.task) %></td>
+          <td class="hours"><%= shift.time if shift.time %></td>
+          <td class="pay"><%= number_to_currency(shift.pay) %></td>
+          <td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), shift, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>
+        </tr>
+        <% for i in 1..dailyShifts.count - 1 %>
+          <% shift = dailyShifts[i] %>
+          <tr class="grouped-shift" data-shift-id="<%= shift.id %>">
+            <td></td>
+            <td class="edit"><%= link_to image_tag("icon-edit.png"), edit_shift_path(shift) %></td>
+            <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
+            <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
+            <td class="project"><%= link_to shift.project.name, edit_project_path(shift.project) %></td>
+            <td class="project"><%= link_to shift.task.name, edit_task_path(shift.task) %></td>
+            <td class="hours"><%= shift.time if shift.time %></td>
+            <td class="pay"><%= number_to_currency(shift.pay) %></td>
+            <td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), shift, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>
+          </tr>
+        <% end %>
+      <% end %>
+
+      <% @date1 += 1.day %>
     <% end %>
+
   </tbody>
 </table>
 
 <%= form_for(@new_shift, remote: true) do |f| %>
-  <%= f.hidden_field :date_in, value: @date %>
-  <%= f.hidden_field :date_out, value: @date %>
+  <%= f.hidden_field :date_in, value: @date1 %>
+  <%= f.hidden_field :date_out, value: @date2 %>
   <%= f.hidden_field :user_id, value: @current_user.id %>
 
   <% if @new_shift.errors.any? %>
@@ -60,6 +96,7 @@
     </thead>
     <tbody>
       <tr>
+        <td class="edit"></td>
         <td class="clock-in"><%= f.time_field :clock_in, class: "form-control", value: Time.now.to_s(:time) %></td>
         <td class="clock-out"><%= f.time_field :clock_out, class: "form-control", value: Time.now.to_s(:time) %></td>
         <td class="project"><%= f.collection_select(:project_id, @projects, :id, :name, class: "form-control") %></td>

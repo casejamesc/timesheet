@@ -4,7 +4,10 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = @current_user.projects
+    @tasks = @current_user.tasks
+    @new_project = Project.new
+    @new_task = Task.new
   end
 
   # GET /projects/1
@@ -24,12 +27,13 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
+    Project.update_all({default: false}, {user_id: @current_user.id})
     @project = Project.new(project_params)
 
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @project }
+        format.js
       else
         format.html { render action: 'new' }
         format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -40,6 +44,8 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+    Project.update_all({default: false}, {user_id: @current_user.id})
+
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
@@ -54,10 +60,11 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
+    @id = @project.to_json(only: [:id])
     @project.destroy
     respond_to do |format|
       format.html { redirect_to projects_url }
-      format.json { head :no_content }
+      format.json { render json: @id }
     end
   end
 

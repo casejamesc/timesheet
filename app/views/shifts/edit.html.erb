@@ -1,7 +1,7 @@
 <div class="shift-form panel panel-default">
   <div class="panel-heading">
     Edit Shift
-    <%= link_to 'Daily View', filtered_shifts_path('daily', Date.today), class: 'daily' %>
+    <%= link_to 'Daily View', filtered_shifts_path('daily', Date.today, Date.today), class: 'daily' %>
   </div>
 
   <%= render 'form' %>

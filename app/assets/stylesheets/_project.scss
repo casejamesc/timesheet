@@ -2,7 +2,7 @@
 
 /* ============ BY CLASS ============ */
 .wrapper {
-	width: 980px;
+	width: 1080px;
 	margin: 0 auto;
 }
 
@@ -50,7 +50,11 @@
 	.navbar {
 		border-radius: 0;
 		.caret {
-			margin-left: 10px;
+			margin-left: 20px;
+		}
+		.dropdown-menu li a {
+			padding: 8px 30px;
+			@extend .text-s;
 		}
 	}
 }
@@ -84,54 +88,55 @@
 [data-filter="bi-weekly"] .hover-style {
 	background: $color5 !important;
 }
-[data-filter="monthly"]:hover td a, [data-filter="monthly"]:hover td span {
+[data-filter="monthly"]:hover td a {
 	background: $color5 !important;
 }
 
 .ui-datepicker {
-	width: 270px;
-	// td.highlight a {
-	// 	background: #99dd73;
-	// 	border: 1px #88a276 solid !important;
-	// }
-	// .ui-state-active {
-	// 	color: #1c94c4;
-	// }
+	width: 255px;
+	td.highlight a {
+		background: #99dd73;
+		border: 1px #88a276 solid !important;
+	}
+	.ui-state-active {
+		color: #1c94c4;
+	}
 	.ui-state-hover {
 		color: #1c94c4;
 		background: $color5;
 	}
+	// today's styling
+	.ui-state-highlight {
+		color: hsl(212, 72.7811%, 27%);
+		background: hsl(0, 0%, 98%);
+		border: 1px solid #ccc;
+	}
 }
 
 .main-content {
-	width: 670px;
+	width: 72%;
 	float: left;
+}
+table {
+	input[type="checkbox"] {
+		width: 20px;
+		margin: 0;
+	}
 	th, td {
 		text-align: left;
 	}
 	td {
-		cursor: pointer;
-	}
-	.hours, .pay {
-		text-align: right;
+		cursor: default;
 	}
 	.action {
 		text-align: center;
-		width: 50px;
-	}
-	.clock-in, .clock-out, .pay {
-		width: 100px;
-	}
-	.project, .task {
-		width: 150px;
-	}
-	.action img {
-		width: 20px;
-	}
-	input, select {
-		width: 100%;
+		img {
+			width: 20px;
+		}
 	}
 }
+
+
 .new {
 	clear: both;
 }
@@ -141,7 +146,22 @@
 	.active {
 		border: 1px solid red;
 	}
+	.grouped-shift td {
+		border-top: 1px solid transparent;
+	}
 }
+
+.projects-wrapper {
+	float: left;
+	width: 46.5%;
+}
+
+
+.tasks-wrapper {
+	float: right;
+	width: 46.5%;
+}
+
 /* ============ FOOTER ============ */
 .main-footer {
 	background: hsl(242, 21%, 30%);
@@ -246,4 +266,119 @@
 	.daily {
 		float: right;
 	}
+}
+
+/* *** TASKS EDIT *** */
+.tasks-edit .status-group {
+	float: left;
+	width: 150px;
+	label, input {
+		float: left;
+		width: auto;
+	}
+	label {
+		margin-left: 10px;
+	}
+}
+
+.default-group {
+	float: right;
+	width: 150px;
+	label, input {
+		float: left;
+		width: auto;
+	}
+	label {
+		margin-left: 10px;
+	}
+}
+
+// SHIFTS INDEX
+.shifts-index {
+	.edit {
+		width: 46px;
+		img {
+			width: 30px;
+		}
+	}
+	.date-in {
+		width: 160px;
+	}
+	.clock-in, .clock-out {
+		width: 132px;
+	}
+	.project, .task {
+		width: 140px;
+	}
+	.hours, .pay {
+		text-align: right;
+	}
+	.hours {
+		width: 65px;
+	}
+	.pay {
+		width: 72px;
+	}
+	.action {
+		input {
+			float: right;
+			width: 60px;
+		}
+	}
+	input, select {
+		width: 100%;
+	}
+	#filter {
+		margin-bottom: 10px;
+	}
+}
+
+// PROJECTS(TASKS) INDEX
+table {
+	td {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+}
+.projects-index, .tasks-index {
+	.table>tbody>tr.active td {
+		background-color: hsla(212, 72%, 33%, .5);
+		a {
+			color: white;
+		}
+	}
+	.name {
+		width: 150px;
+		max-width: 150px;
+		input {
+			width: 100%;
+		}
+	}
+	.rate {
+		width: 80px;
+		max-width: 80px;
+		text-align: right;
+		input {
+			width: 100%;
+		}
+	}
+	.status {
+		text-align: center;
+		width: 110px;
+	}
+	.default {
+		text-align: center;
+		width: 90px;
+	}
+	.check {
+		width: 20px;
+	}
+	.no-tasks {
+		padding: 0 15px 20px;
+	}
+}
+
+.hide {
+	display: none !important;
 }

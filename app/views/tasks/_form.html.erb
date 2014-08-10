@@ -16,9 +16,15 @@
     <%= f.label :name %><br>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
-  <div class="field form-group">
-    <%= f.label :status %><br>
-    <%= f.check_box :status, class: 'form-control' %>
+  <div class="checkboxes clearfix">
+    <div class="field form-group status-group clearfix">
+      <%= f.check_box :status, class: 'form-control' %>
+      <%= f.label :status %>
+    </div>
+    <div class="field form-group default-group clearfix">
+      <%= f.check_box :default, class: 'form-control' %>
+      <%= f.label :default %>
+    </div>
   </div>
   <div class="field form-group">
     <%= f.label :rate %><br>
@@ -26,10 +32,6 @@
       <span class="input-group-addon">$</span>
       <%= f.text_field :rate, class: 'form-control' %>
     </div>
-  </div>
-  <div class="field form-group">
-    <%= f.label :default %><br>
-    <%= f.check_box :default, class: 'form-control' %>
   </div>
   <div class="field form-group">
     <%= f.label :user_id %><br>

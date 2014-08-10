@@ -30,6 +30,12 @@ button, input[type="submit"] {
 	cursor: pointer;
 }
 
+// counters bootstraps styling
+input[type="checkbox"] {
+	display: inline-block;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+}
 // allow gradients to fill entire window
 html {
 	height: 100%;

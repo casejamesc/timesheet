@@ -5,12 +5,13 @@ class ShiftsController < ApplicationController
   # GET /shifts.json
   def index
     # pass var to js
-    gon.date1 = @date1 = params[:date1]
-    gon.date2 = @date2 = params[:date2]
+    gon.date1 = @date1 = params[:date1].to_date
+    gon.date2 = @date2 = params[:date2].to_date
     gon.filter = @filter = params[:filter]
+    
     @shifts = @current_user.shifts.by_date_range(@date1, @date2)
     @new_shift = Shift.new
-    
+
     render 'daily' if @filter == 'daily'
   end
 

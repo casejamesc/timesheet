@@ -1,7 +1,8 @@
 $(function() {  
   <% shift = @shift %>
 
-  var newRow = $('<tr data-shift-id="<%= shift.id %>">' +
+  var newRow = $('<tr data-id="<%= shift.id %>">' +
+    '<td class="edit"><%= link_to image_tag("icon-edit.png"), edit_shift_path(shift) %></td>' +
     '<td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>' +
     '<td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>' +
     '<td class="project"><%= shift.project.name if shift.project %></td>' +
@@ -15,6 +16,8 @@ $(function() {
   newRow.find('td').effect('highlight', 1000).on('click', function() {
     document.location="<%= edit_shift_path(shift) %>";
   });
+
+  $('.new_shift').trigger('reset');
 
   // ********* WONT WORK WITH DELEGATE! FIGURE OUT WHY *********
   $('.shift-table .delete').on('click', function(e) {

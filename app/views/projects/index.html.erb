@@ -1,35 +1,124 @@
-<h1>Listing projects</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Status</th>
-      <th>Rate</th>
-      <th>Default</th>
-      <th>User</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @projects.each do |project| %>
+<div class="projects-wrapper">
+  <h1>Projects</h1>
+  <table class="projects-table table table-striped table-hover">
+    <thead>
       <tr>
-        <td><%= project.name %></td>
-        <td><%= project.status %></td>
-        <td><%= project.rate %></td>
-        <td><%= project.default %></td>
-        <td><%= project.user_id %></td>
-        <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th class="name">Name</th>
+        <th class="rate">Rate</th>
+        <th class="status">Complete</th>
+        <th class="default">Default</th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <tr class="all-projects active" data-id="-1">
+        <td colspan="5" class="name"><em>** ALL PROJECTS **</em></td>
+      </tr>
 
-<%= link_to 'New Project', new_project_path %>
+      <% @projects.each do |project| %>
+      <tr data-id="<%= project.id %>">
+        <td class="name"><%= link_to project.name, edit_project_path(project) %></td>
+        <td class="rate"><%= number_to_currency project.rate %></td>
+        <td class="status"><%= status project.status %></td>
+        <td class="default"><%= default project.default %></td>
+        <td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), project, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= form_for(@new_project, remote: true) do |f| %>
+  <%= f.hidden_field :user_id, value: @current_user.id %>
+
+  <% if @new_project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@new_project.errors.count, "error") %> prohibited this shift from being saved:</h2>
+
+      <ul>
+        <% @new_project.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="new-table table table-striped">
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name"><%= f.text_field :name, class: "form-control" %></td>
+        <td class="rate"><%= f.text_field :rate, class: "form-control" %></td>
+        <td class="status"><%= f.check_box :status, class: "form-control" %></td>
+        <td class="default"><%= f.check_box :default, class: "form-control" %></td>
+        <td class="action"><%= f.submit 'New', class: 'new btn btn-success' %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+
+</div>
+
+<div class="tasks-wrapper">
+  <h1>Tasks</h1>
+  <table class="tasks-table table table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="name">Name</th>
+        <th class="rate">Rate</th>
+        <th class="status">Complete</th>
+        <th class="default">Default</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @tasks.each do |task| %>
+      <tr data-id="<%= task.id %>" data-project-id="<%= task.project_id %>">
+        <td class="name"><%= link_to task.name, edit_task_path(task) %></td>
+        <td class="rate"><%= number_to_currency task.rate %></td>
+        <td class="status"><%= status task.status %></td>
+        <td class="default"><%= default task.default %></td>
+        <td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), task, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="no-tasks hide">
+    <em>There are no tasks for this project</em>
+  </div>
+
+  <%= form_for(@new_task, remote: true) do |f| %>
+  <%= f.hidden_field :user_id, value: @current_user.id %>
+  <%= f.hidden_field :project_id %>
+
+  <% if @new_task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@new_task.errors.count, "error") %> prohibited this shift from being saved:</h2>
+
+      <ul>
+        <% @new_task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="new-table table table-striped">
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="name"><%= f.text_field :name, class: "form-control" %></td>
+        <td class="rate"><%= f.text_field :rate, class: "form-control" %></td>
+        <td class="status"><%= f.check_box :status, class: "form-control" %></td>
+        <td class="default"><%= f.check_box :default, class: "form-control" %></td>
+        <td class="action"><%= f.submit 'New', class: 'new btn btn-success' %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+
+</div>

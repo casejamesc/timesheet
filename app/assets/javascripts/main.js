@@ -35,17 +35,29 @@ $(function() {
       0 //0 is equal to last day of next month
     );
   };
+  Date.prototype.correct = function() {
+    this.setDate(this.getDate());
+  };
+  Date.prototype.format = function() {
+     return '' + this.getFullYear() + '-' + (this.getMonth() + 1) + '-' + this.getDate() + '';
+  };
 
   // ********* INITIALIZATION *********
-  var date1 = new Date(gon.date1);
-  var date2 = new Date(gon.date2);
-  date1.setDate(date1.getDate() + 1);
-  date1.setDate(date2.getDate() + 1);
+  if (typeof gon != "undefined") {
+    var date1 = new Date(gon.date1);
 
-  var filter = gon.filter;
-  var tips  = ['some description','some other description'];
+    var date2 = new Date(gon.date2);
+    date1.correct();
+    date2.correct();
+
+    var filter = gon.filter;
+  }
 
   // FILTER DROPDOWN 
+  $('#filter').on('change', function() {
+    filter = $(this).val();
+    $('.main-calendar').attr('data-filter', $(this).val());
+  });
   $('#filter').val(filter);
   // CALENDAR
   $( ".main-calendar" ).datepicker({
@@ -53,46 +65,67 @@ $(function() {
     showOtherMonths: true,
     showMonth: true,
     defaultDate: date1,
-    // beforeShowDay: highlightDays,
+    beforeShowDay: highlightDays,
     onSelect: function(dateText, inst) {
-      var beg = dateText;
-      var end = dateText;
-      if ( filter == 'daily' ) {
-      } else if ( filter == 'weekly' ) { 
-        beg = dateText.startOfWeek();
-        end = dateText.endOfWeek();
-      } else if ( filter == 'bi-weekly' ) {
-        beg = dateText.startOfWeek();
-        end = dateText.endOfNextWeek();
-      } else if ( filter == 'monthly' ) {
-        beg = dateText.startOfMonth();
-        end = dateText.endOfMonth();
-      }
+      var beg = new Date(dateText);
+      var end = new Date(dateText);
+      beg.correct();
+      end.correct();
 
-      window.location = '/' + $('#filter').val() + '/shifts/' + beg + '/' + end;
+      switch (filter) {
+        case 'daily':
+        break;
+        case 'weekly':
+          beg = beg.startOfWeek();
+          end = end.endOfWeek();
+          break;
+        case 'bi-weekly':
+          beg = beg.startOfWeek();
+          end = end.endOfNextWeek();
+          break;
+        case 'monthly':
+          beg = beg.startOfMonth();
+          end = end.endOfMonth();
+          break;
+      }
+        console.log(beg.format());
+        console.log(end.format());
+    window.location = '/' + $('#filter').val() + '/shifts/' + beg.format() + '/' + end.format();
     }
   });
   
   function highlightDays(calendarDate) {
     // between months (start)
-    if ( date1.getMonth() < calendarDate.getMonth() && date2.getMonth() == calendarDate.getMonth() && calendarDate.getDate() <= date2.getDate() ) {
-      return [true, 'highlight', tips[i]];
+    if ( date1.getMonth() < calendarDate.getMonth() && date2.getMonth() === calendarDate.getMonth() && calendarDate.getDate() <= date2.getDate() ) {
+      return [true, 'highlight', ''];
     }
     // between months (end )
-    else if ( date2.getMonth() > calendarDate.getMonth() && date1.getMonth() == calendarDate.getMonth() && calendarDate.getDate() >= date1.getDate() ) {
-      return [true, 'highlight', tips[i]];
+    else if ( date2.getMonth() > calendarDate.getMonth() && date1.getMonth() === calendarDate.getMonth() && calendarDate.getDate() >= date1.getDate() ) {
+      return [true, 'highlight', ''];
     }
     // regular test
     else if ( date1.getMonth() == date2.getMonth() && calendarDate.getDate() >= date1.getDate() && calendarDate.getDate() <= date2.getDate() ) {
-      return [true, 'highlight', tips[i]];
+      return [true, 'highlight', ''];
     }
+    return [true, '', ''];
   }
 
   // ********* AJAX *********
-  $('.shift-table .delete').on('click', function(e) {
+  // CREATE
+  $('.new_task').on('submit', function(e) {
+    //set project-id on task befor submitting
+    projectId = $('.projects-table tr.active').data('id');
+    $('#task_project_id').val( projectId );
+  });
+
+  // DELETE
+  $('table .delete').on('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
 
+    //save table and item
+    table = $(this).closest('table');
+    itemId = $(this).closest('tr').data('id');
     $.ajax( {
       type: 'delete',
       url: $(this).attr('href'),
@@ -102,8 +135,17 @@ $(function() {
         alert('error');
       },
       success: function(json) {
-        $('tr[data-shift-id="' + json.id + '"]').children('td').effect('highlight', {color: 'hsl(0, 66%, 76%)'}, 700, function() {
-          $(this).remove();
+        if ( table.hasClass('projects-table') ) {
+          //remove tasks of this project
+          $('.tasks-table tbody tr[data-project-id="' + itemId + '"]').remove();
+          //change active row to all projects
+          $('.all-projects').trigger('click');
+        }
+        // remove row
+        itemToDelete = table.find('tr[data-id="' + json.id + '"]');
+        itemToDelete.children('td').effect('highlight', {color: 'hsl(0, 66%, 76%)'}, 400, function() {
+          itemToDelete.remove();
+          displayNoTasksMessage();
         });
       }
     });
@@ -111,10 +153,6 @@ $(function() {
   });
     
   // ********* STYLING *********
-  // change data attr so that hover styling can be different
-  $('#filter').on('change', function() {
-    $('.main-calendar').attr('data-filter', $(this).val());
-  });
   // bi-weekly hover styling 
   $('.main-calendar td').hover( function() {
     $(this).closest('tr').find('a, span').addClass('hover-style');
@@ -124,7 +162,7 @@ $(function() {
     $(this).closest('tr').next().find('a, span').removeClass('hover-style');
   });
 
-  // ****** BY-PAGE ******
+  // ********* BY-PAGE *********
   $( ".shifts-edit .daily" ).on('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -132,4 +170,29 @@ $(function() {
     var editPath = '/daily/shifts/' + $("#shift_date_in").val() + '/'+ $("#shift_date_in").val() ;
     window.location = editPath;
   });
+
+  // *** PROJECTS/TASKS INDEX ***
+  function displayNoTasksMessage() {
+    // display text for no tasks
+    if ( $('.tasks-table tbody').height() > 0 ) {
+      $('.no-tasks').addClass('hide');
+    } else {
+      $('.no-tasks').removeClass('hide');
+    }
+  }
+
+  $('.projects-table tbody tr').on('click', function() {
+    // display tasks by project
+    $('.projects-table tbody tr').removeClass('active');
+    $(this).addClass('active');
+    if ( $(this).data('id') == '-1' ) {
+      $('.tasks-table tbody tr').removeClass('hide');
+    } else {
+      $('.tasks-table tbody tr').addClass('hide');
+      $('.tasks-table tbody tr[data-project-id="' + $(this).data('id') + '"]').removeClass('hide');
+    }
+    displayNoTasksMessage();
+  });
+
+
 });

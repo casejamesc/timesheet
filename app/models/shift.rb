@@ -5,7 +5,8 @@ class Shift < ActiveRecord::Base
 
   validates :clock_in, :clock_out, :date_in, :date_out, :project, :task, presence: true
 
-  scope :by_date_range, -> (date1, date2) { where("date_in >= ? OR date_out <= ?", date1, date2 ) }
+  scope :by_date_range, -> (date1, date2) { where("date_in >= ? AND date_out <= ?", date1, date2 ).order("clock_in ASC") }
+  scope :by_day, -> (date) { where("date_in = ?", date ) }
 
   def duration
     self.clock_out - self.clock_in

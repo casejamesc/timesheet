@@ -29,7 +29,6 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    Task.update_all({default: false}, {user_id: @current_user.id})
     @task = Task.new(task_params)
 
     respond_to do |format|
@@ -46,9 +45,6 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
-    # @current_user.tasks.update_all(default: false)
-    Task.update_all({default: false}, {user_id: @current_user.id})
-
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }

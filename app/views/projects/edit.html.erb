@@ -1,10 +1,7 @@
 <div class="project-form panel panel-default">
-  <div class="panel-heading">Edit Project</div>
+  <div class="panel-heading">Edit Project <%= link_to image_tag('icon-back.png'), tasks_path, class: 'back' %></div>
 
   <%= render 'form' %>
-
-  <%= link_to 'Show', @project %> |
-  <%= link_to 'Back', projects_path %>
 
   </div>
 </div>

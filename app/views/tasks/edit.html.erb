@@ -1,10 +1,7 @@
 <div class="task-form panel panel-default">
-  <div class="panel-heading">Edit Task</div>
+  <div class="panel-heading">Edit Task <%= link_to image_tag('icon-back.png'), tasks_path, class: 'back' %></div>
 
   <%= render 'form' %>
-
-  <%= link_to 'Show', @task %> |
-  <%= link_to 'Back', tasks_path %>
 
   </div>
 </div>

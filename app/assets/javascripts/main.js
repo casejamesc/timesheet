@@ -119,7 +119,7 @@ $(function() {
   });
 
   // DELETE
-  $('table .delete').on('click', function(e) {
+  $('.table').on('click', '.delete', function(e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -181,7 +181,7 @@ $(function() {
     }
   }
 
-  $('.projects-table tbody tr').on('click', function() {
+  $('.projects-table tbody').on('click', 'tr', function() {
     // display tasks by project
     $('.projects-table tbody tr').removeClass('active');
     $(this).addClass('active');

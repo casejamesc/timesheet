@@ -9,6 +9,11 @@ $(function() {
     '<td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), project, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>' +
     '</tr>');
 
+  //UPDATE DEFAULTS
+  if ( <%= project.default %> ) {
+    $('.tasks-table td.default').html('-');
+  }
+
   $('.projects-table tbody').append(newRow);
   newRow.find('td').effect('highlight', 1000);
 

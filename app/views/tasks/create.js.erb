@@ -1,7 +1,7 @@
 $(function() {  
   <% task = @task %>
 
-  var newRow = $('<tr data-id="<%= task.id %> data-project-id="<%= task.project_id %>">' +
+  var newRow = $('<tr data-id="<%= task.id %>" data-project-id="<%= task.project_id %>">' +
     '<td class="name"><%= link_to task.name, task %></td>' +
     '<td class="rate"><%= task.rate %></td>' +
     '<td class="status"><%= status task.status %></td>' +
@@ -9,7 +9,13 @@ $(function() {
     '<td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), task, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>' +
     '</tr>');
 
+  //THERE WILL BE ATLEAST ONE ROW
   $('.no-tasks').addClass('hide');
+  //UPDATE DEFAULTS OF CURRENT TASK
+  if ( <%= task.default %> ) {
+    $('.tasks-table td.default:visible').html('-');
+  }
+
   $('.tasks-table tbody').append(newRow);
   newRow.find('td').effect('highlight', 1000);
 

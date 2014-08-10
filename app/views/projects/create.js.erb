@@ -1,0 +1,18 @@
+$(function() {  
+  <% project = @project %>
+
+  var newRow = $('<tr data-id="<%= project.id %>">' +
+    '<td class="name"><%= link_to project.name, project %></td>' +
+    '<td class="rate"><%= project.rate %></td>' +
+    '<td class="status"><%= status project.status %></td>' +
+    '<td class="default"><%= default project.default %></td>' +
+    '<td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), project, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>' +
+    '</tr>');
+
+  $('.projects-table tbody').append(newRow);
+  newRow.find('td').effect('highlight', 1000);
+
+    //RESET THE FORM
+  $('.new_project').trigger('reset');
+});
+

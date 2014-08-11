@@ -1,0 +1,13 @@
+$(function() {  
+
+  var newTaskSelect = '<select id="shift_task_id" name="shift[task_id]">' +
+    <% @tasks.each do |task| %>
+    '<option value="<%= task.id %>">' + '<%= task.name %>' + '</option>' +
+    <% end %>
+    '</select>'
+
+  $('#shift_task_id').remove();
+  $('.task-group').append($(newTaskSelect));
+
+});
+

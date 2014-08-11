@@ -3,7 +3,7 @@ class Shift < ActiveRecord::Base
   belongs_to :project
   belongs_to :task
 
-  validates :clock_in, :clock_out, :date_in, :date_out, :project, :task, presence: true
+  validates :clock_in, :clock_out, :date_in, :date_out, presence: true
 
   scope :by_date_range, -> (date1, date2) { where("date_in >= ? AND date_out <= ?", date1, date2 ).order("clock_in ASC") }
   scope :by_day, -> (date) { where("date_in = ?", date ) }

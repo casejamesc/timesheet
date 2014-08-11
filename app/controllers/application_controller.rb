@@ -3,11 +3,14 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_action :set_current_user
+  before_action :authorize_user
   before_action :update_history
 
-  def set_current_user
+  def authorize_user
     @current_user = User.find(session[:user_id])
+    if !@current_user
+      redirect_to root_url, notice: "Please log in"
+    end
     @tasks = @current_user.tasks
     @projects = @current_user.projects
   end

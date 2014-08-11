@@ -154,6 +154,10 @@ table {
 		}
 	}
 }
+#error_explanation {
+	color: hsl(1, 75%, 50%);
+	font-style: italic;
+}
 
 /* ============ FOOTER ============ */
 .main-footer {

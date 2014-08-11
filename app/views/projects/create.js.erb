@@ -2,7 +2,7 @@ $(function() {
   <% project = @project %>
 
   var newRow = $('<tr data-id="<%= project.id %>">' +
-    '<td class="name"><%= link_to project.name, project %></td>' +
+    '<td class="name"><%= link_to project.name, edit_project_path(project) %></td>' +
     '<td class="rate"><%= project.rate %></td>' +
     '<td class="status"><%= status project.status %></td>' +
     '<td class="default"><%= default project.default %></td>' +

@@ -1,6 +1,6 @@
 class ShiftsController < ApplicationController
   before_action :set_shift, only: [:show, :edit, :update, :destroy]
-  before_action :set_current_user, except: [:retreive_tasks]
+  before_action :authorize_user, except: [:retreive_tasks]
 
   # GET /retreive_tasks
   def retreive_tasks

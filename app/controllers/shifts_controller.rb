@@ -1,5 +1,15 @@
 class ShiftsController < ApplicationController
   before_action :set_shift, only: [:show, :edit, :update, :destroy]
+  before_action :set_current_user, except: [:retreive_tasks]
+
+  # GET /retreive_tasks
+  def retreive_tasks
+    @selected_project_id = params[:selected_project_id]
+    logger.debug('before')
+    logger.debug(@selected_project_id)
+    @selected_project = Project.find(@selected_project_id);
+    @tasks = @selected_project.tasks
+  end
 
   # GET /shifts
   # GET /shifts.json
@@ -12,7 +22,9 @@ class ShiftsController < ApplicationController
     @shifts = @current_user.shifts.by_date_range(@date1, @date2)
     @new_shift = Shift.new
 
-    render 'daily' if @filter == 'daily'
+    if @filter == 'daily' || @filter == 'today'
+      render 'daily' 
+    end
   end
 
   # GET /shifts/1
@@ -36,7 +48,7 @@ class ShiftsController < ApplicationController
 
     respond_to do |format|
       if @shift.save
-        format.html { redirect_to @shift, notice: 'Shift was successfully created.' }
+        format.html { redirect_to session[:two_pages_ago], notice: 'Shift was successfully created.' }
         format.js
       else
         format.html { render action: 'new' }
@@ -50,7 +62,7 @@ class ShiftsController < ApplicationController
   def update
     respond_to do |format|
       if @shift.update(shift_params)
-        format.html { redirect_to @shift, notice: 'Shift was successfully updated.' }
+        format.html { redirect_to session[:two_pages_ago], notice: 'Shift was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

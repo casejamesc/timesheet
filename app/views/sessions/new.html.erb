@@ -2,7 +2,7 @@
 <div class="wrapper">
   <div class="login_form">
     <% if flash[:alert] %>
-    <p id="notice"><%= flash[:alert] %></p>
+    <p id="alert"><%= flash[:alert] %></p>
     <% end %>
     <%= form_tag do %>
       <%= text_field_tag :name, params[:name], class: 'form-control', placeholder: 'Username' %>

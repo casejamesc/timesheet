@@ -5,17 +5,24 @@ select {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 }
-
 input[type="checkbox"] {
 	width: 20px;
 	height: 20px;
 	margin: 0;
+  outline: none;
 }
 
 /* ============ BY CLASS ============ */
 .wrapper {
 	width: 1080px;
 	margin: 0 auto;
+}
+.hide {
+	display: none !important;
+}
+.disabled {
+	pointer-events: none;
+	opacity: .6;
 }
 
 /* ============ HEADER ============ */
@@ -33,6 +40,7 @@ input[type="checkbox"] {
 		width: 300px;
 		margin: 20px auto 0 auto;
 		span {
+			margin-left: 5px;
 			@extend .text-x;
 			font-family: 'Kaushan Script';
 			font-family: 'Architects Daughter';
@@ -76,7 +84,6 @@ input[type="checkbox"] {
   min-width: 980px;
   min-height: 1200px;
 }
-
 .body {
 	border-top: 1px solid hsla(0, 0%, 0%, .3);
 	padding: 50px 0;
@@ -84,7 +91,10 @@ input[type="checkbox"] {
 		margin-bottom: 30px;
 	}
 }
-
+.main-content {
+	width: 72%;
+	float: left;
+}
 .sidebar {
 	float: right;
 }
@@ -93,7 +103,8 @@ input[type="checkbox"] {
 	margin: 8px 0 4px;
 }
 
-//*** CALENDAR ***
+/* ============ SHARED ============ */
+// CALENDAR
 [data-filter="weekly"] tr:hover td a, [data-filter="weekly"] tr:hover td span {
 	background: $color5 !important;
 }
@@ -103,7 +114,6 @@ input[type="checkbox"] {
 [data-filter="monthly"]:hover td a {
 	background: $color5 !important;
 }
-
 .ui-datepicker {
 	width: 255px;
 	td.highlight a {
@@ -124,10 +134,11 @@ input[type="checkbox"] {
 		border: 1px solid #ccc;
 	}
 }
-
-.main-content {
-	width: 72%;
-	float: left;
+.back {
+	float: right;
+	img { 
+		width: 25px;
+	}
 }
 table {
 	th, td {
@@ -142,32 +153,6 @@ table {
 			width: 20px;
 		}
 	}
-}
-
-
-.new {
-	clear: both;
-}
-
-.shift-table {
-	margin-bottom: 50px;
-	.active {
-		border: 1px solid red;
-	}
-	.grouped-shift td {
-		border-top: 1px solid transparent;
-	}
-}
-
-.projects-wrapper {
-	float: left;
-	width: 46.5%;
-}
-
-
-.tasks-wrapper {
-	float: right;
-	width: 46.5%;
 }
 
 /* ============ FOOTER ============ */
@@ -190,94 +175,84 @@ table {
 }
 
 /* ============ BY PAGE ============ */
-.sessions-new .main-header {
-	.main-header-top {
-		height: 200px;
-	}	
-	.navbar {
-		display: none;
-	}
-	.logo {
-		float: left;
-		width: auto;
-		margin-top: 50px;
-		span {
-			@extend .text-xx;
+// HOME-PAGE
+.sessions-new {
+	.main-header {
+		.main-header-top {
+			height: 200px;
+		}	
+		.navbar {
+			display: none;
 		}
-		img {
-			height: 100px;
-		}
-	}
-}
-
-.sessions-new .main {
-  background: image-url('bg_grass.jpg') no-repeat;
-  background-size: cover;
-}
-
-.sessions-new .login_form {
-	width: 350px;
-	margin: 0 auto;
-	margin-top: 150px;
-	input {
-		height: 40px;
-		margin-bottom: 7px;
-		@extend .text-m;
-		background: hsla(0, 0%, 100%, .4);
-		color: $shade3;
-		&:focus {
-			background: hsla(0, 0%, 100%, .6);
+		.logo {
+			float: left;
+			width: auto;
+			margin-top: 50px;
+			span {
+				margin-left: 10px;
+				@extend .text-xx;
+			}
+			img {
+				height: 100px;
+			}
 		}
 	}
-	[type="submit"] {
-		float: right;
-		color: $shade3;
-		&:hover {
-			background: hsla(0, 0%, 100%, .6);
+	.main {
+		background: image-url('bg_grass.jpg') no-repeat;
+		background-size: cover;
+	}
+	.login_form {
+		width: 350px;
+		margin: 0 auto;
+		margin-top: 120px;
+		input {
+			height: 40px;
+			margin-bottom: 7px;
+			@extend .text-m;
+			background: hsla(0, 0%, 100%, .4);
+			color: $shade3;
+			&:focus {
+				background: hsla(0, 0%, 100%, .6);
+			}
+		}
+		[type="submit"] {
+			float: right;
+			color: $shade3;
+			&:hover {
+				background: hsla(0, 0%, 100%, .6);
+			}
+		}
+		#alert {
+			font-style: italic;
+			@extend .text-l;
+			margin-left: 10px;
+			margin-bottom: 20px;
 		}
 	}
-}
-
-.shift-form {
-	.form-group {
-		@extend .clearfix;
-	}
-
-	#shift_date_in, #shift_date_out, .project-group, .add-cost-group {
-		float: left;
-		width: 48%;
-	}
-
-	#shift_clock_in, #shift_clock_out, .task-group, .actions {
-		float: right;
-		width: 48%;
-	}
-
-	.project-group, .task-group {
-		select {
-			width: 100%
-		}
-	}
-
-	.submit-wrapper {
-		float: right;
-		margin-top: 30px;
-	}
-}
-
-.shifts-edit {
-	.daily {
-		float: right;
-	}
-}
-
-.task-form, .project-form, .shift-form {
-	margin-top: 20px;
-	width: 400px;
 }
 
 // SHIFTS INDEX
 .shifts-index {
+	&.today, &.daily {
+		.new {
+			float: right;
+		}
+		.shift-table {
+			margin-bottom: 50px;
+		}
+	}
+	.grouped-shift td {
+		border-top: 1px solid transparent;
+	}
+	.new-top {
+		float: right;
+		margin-top: 5px;
+		margin-right: 300px;
+	}
+	.new-bottom {
+		float: right;
+		margin-bottom: 30px;
+	}
 	.edit {
 		width: 46px;
 		img {
@@ -316,39 +291,33 @@ table {
 	}
 }
 
-/* *** PROJECT/TASKS EDIT *** */
-.projects-edit, .tasks-edit {
-	.back {
-		float: right;
-		img { 
-			width: 25px;
-		}
+// SHIFTS EDIT/NEW
+.shift-form {
+	.form-group {
+		@extend .clearfix;
 	}
-	.checkboxes {
-		padding-top: 5px;
-	}
-	.status-group, .default-group {
+	#shift_date_in, #shift_date_out, .project-group, .add-cost-group {
 		float: left;
-		width: 130px;
-		label, input[type="checkbox"] {
-			float: left;
-			display: inline-block;
-			margin: 0;
-			line-height: 25px;
-			vertical-align: middle;
-		}
-		label {
-			margin-left: 8px;
-		}
-		input[type="checkbox"] {
-			position: relative;
-			top: 5px;
-		}
+		width: 48%;
 	}
-
-	input[type="submit"] {
+	#shift_clock_in, #shift_clock_out, .task-group, .actions {
 		float: right;
+		width: 48%;
 	}
+	.project-group, .task-group {
+		select {
+			width: 100%
+		}
+	}
+	.submit-wrapper {
+		float: right;
+		margin-top: 30px;
+	}
+}
+
+.task-form, .project-form, .shift-form {
+	margin-top: 20px;
+	width: 400px;
 }
 
 // PROJECTS(TASKS) INDEX
@@ -360,6 +329,19 @@ table {
 	}
 }
 .projects-index, .tasks-index {
+	#notice {
+		font-style: italic;
+		font-weight: normal;
+		margin-bottom: 20px;
+	}
+	.projects-wrapper {
+		float: left;
+		width: 46.5%;
+	}
+	.tasks-wrapper {
+		float: right;
+		width: 46.5%;
+	}
 	.table>tbody>tr.active td {
 		background-color: hsla(212, 72%, 33%, .5);
 		a {
@@ -395,8 +377,36 @@ table {
 	.no-tasks {
 		padding: 0 15px 20px;
 	}
+	input[type="checkbox"] {
+		margin-top: 8px;
+	}
 }
 
-.hide {
-	display: none !important;
+// PROJECT/TASKS EDIT 
+.projects-edit, .tasks-edit {
+	.checkboxes {
+		padding-top: 5px;
+	}
+	.status-group, .default-group {
+		float: left;
+		width: 130px;
+		label, input[type="checkbox"] {
+			float: left;
+			display: inline-block;
+			margin: 0;
+			line-height: 25px;
+			vertical-align: middle;
+		}
+		label {
+			margin-left: 8px;
+		}
+		input[type="checkbox"] {
+			position: relative;
+			top: 5px;
+		}
+	}
+
+	input[type="submit"] {
+		float: right;
+	}
 }

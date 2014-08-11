@@ -1,4 +1,7 @@
-<h1><%= @filter.titleize + ' (' + @date1.strftime("%m/%-d/%Y") + ' - ' + @date2.strftime("%m/%-d/%Y") + ')' %></h1>
+<h1>
+  <%= @filter.titleize + ' (' + @date1.strftime("%m/%-d/%Y") + ' - ' + @date2.strftime("%m/%-d/%Y") + ')' %>
+  <%= link_to 'New Shift', new_shift_path, class: 'new-top btn btn-success' %>
+</h1>
 
 <div class="sidebar">
   <div class="field form-group filter-group">
@@ -30,6 +33,7 @@
       <% dailyShifts = @shifts.by_day(@date1) %>
       <% if dailyShifts.count == 0 %>
         <tr>
+          <td></td>
           <td><%= @date1.strftime("%m/%-d/%Y") %></td>
           <td><em>No shifts</em></td>
           <td></td>
@@ -55,8 +59,8 @@
         <% for i in 1..dailyShifts.count - 1 %>
           <% shift = dailyShifts[i] %>
           <tr class="grouped-shift" data-shift-id="<%= shift.id %>">
-            <td></td>
             <td class="edit"><%= link_to image_tag("icon-edit.png"), edit_shift_path(shift) %></td>
+            <td></td>
             <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
             <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
             <td class="project"><%= link_to shift.project.name, edit_project_path(shift.project) %></td>
@@ -74,38 +78,4 @@
   </tbody>
 </table>
 
-<%= form_for(@new_shift, remote: true) do |f| %>
-  <%= f.hidden_field :date_in, value: @date1 %>
-  <%= f.hidden_field :date_out, value: @date2 %>
-  <%= f.hidden_field :user_id, value: @current_user.id %>
-
-  <% if @new_shift.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@new_shift.errors.count, "error") %> prohibited this shift from being saved:</h2>
-
-      <ul>
-        <% @new_shift.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <table class="new-table table table-striped">
-    <thead>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="edit"></td>
-        <td class="clock-in"><%= f.time_field :clock_in, class: "form-control", value: Time.now.to_s(:time) %></td>
-        <td class="clock-out"><%= f.time_field :clock_out, class: "form-control", value: Time.now.to_s(:time) %></td>
-        <td class="project"><%= f.collection_select(:project_id, @projects, :id, :name, class: "form-control") %></td>
-        <td class="task"><%= f.collection_select(:task_id, @tasks, :id, :name, class: "form-control") %></td>
-        <td class="time"></td>
-        <td class="pay"></td>
-        <td class="action"><%= f.submit 'New', class: 'new btn btn-success' %></td>
-      </tr>
-    </tbody>
-  </table>
-<% end %>
-</div>
+<%= link_to 'New Shift', new_shift_path, class: 'new-bottom btn btn-success' %>

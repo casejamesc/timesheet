@@ -3,12 +3,12 @@
 <head>
   <title>Timesheet</title>
   <%= include_gon %>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= body_class %>">
+<body class="<%= body_class %> <%= filter_class %>">
   <div class="main">
     <header class="main-header">
       <div class="wrapper">
@@ -23,20 +23,20 @@
       <nav class="navbar navbar-inverse" role="navigation">
         <div class="wrapper">
           <ul class="nav navbar-nav">
-            <li class="active dropdown">
+            <li class="<%= in_path?("shifts") %> dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shifts<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><%= link_to 'Today', filtered_shifts_path('daily', Date.today, Date.today) %></li>
+                <li class="<%= in_path?("today") %>" ><%= link_to 'Today', filtered_shifts_sub_path('daily', 'today', Date.today, Date.today), "data-no-turbolink" => true %></li>
                 <li class="divider"></li>
-                <li><%= link_to 'This Week', filtered_shifts_path('weekly', Date.today.beginning_of_week, Date.today.end_of_week) %></li>
-                <li><%= link_to 'Last Week', filtered_shifts_path('weekly', beginning_of_last_week, end_of_last_week) %></li>
-                <li><%= link_to 'Last Two Weeks', filtered_shifts_path('bi-weekly', beginning_of_last_week, Date.today.end_of_week) %></li>
+                <li class="<%= in_path?("this_week") %>" ><%= link_to 'This Week', filtered_shifts_sub_path('weekly', 'this_week', Date.today.beginning_of_week, Date.today.end_of_week) %></li>
+                <li class="<%= in_path?("last_week") %>"><%= link_to 'Last Week', filtered_shifts_sub_path('weekly', 'last_week', beginning_of_last_week, end_of_last_week) %></li>
+                <li class="<%= in_path?("last_two_weeks") %>"><%= link_to 'Last Two Weeks', filtered_shifts_sub_path('bi-weekly', 'last_two_weeks', beginning_of_last_week, Date.today.end_of_week) %></li>
                 <li class="divider"></li>
-                <li><%= link_to 'This Month', filtered_shifts_path('monthly', Date.today.at_beginning_of_month, Date.today.at_end_of_month) %></li>
-                <li><%= link_to 'Last Month', filtered_shifts_path('monthly', beginning_of_last_month, end_of_last_month) %></li>
+                <li class="<%= in_path?("this_month") %>"><%= link_to 'This Month', filtered_shifts_sub_path('monthly', 'this_month', Date.today.at_beginning_of_month, Date.today.at_end_of_month) %></li>
+                <li class="<%= in_path?("last_month") %>"><%= link_to 'Last Month', filtered_shifts_sub_path('monthly', 'last_month', beginning_of_last_month, end_of_last_month) %></li>
               </ul>
             </li>
-            <li><%= link_to 'Projects & Tasks', projects_path %></li>
+            <li class="<%= in_path?("projects", "tasks") %>" ><%= link_to 'Projects & Tasks', projects_path %></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -54,13 +54,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= @current_user.name if @current_user%><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Logout</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
+                <li><%= link_to "Logout", logout_path, method: :delete %></li>
               </ul>
             </li>
           </ul>

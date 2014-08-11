@@ -3,7 +3,9 @@ Timesheet::Application.routes.draw do
 
   resources :projects
 
+  get ":filter/:sub_filter/shifts/:date1/:date2", :to => "shifts#index", as: "filtered_shifts_sub"
   get ":filter/shifts/:date1/:date2", :to => "shifts#index", as: "filtered_shifts"
+  get "shifts/retreive_tasks", :to => "shifts#retreive_tasks"
   resources :shifts
 
   root :to => "sessions#new"

@@ -1,6 +1,6 @@
 <div class="panel-body">
   <%= form_for(@shift) do |f| %>
-  <%= f.hidden_field :user_id, value: @current_user %>
+  <%= f.hidden_field :user_id, value: @current_user.id %>
 
   <% if @shift.errors.any? %>
   <div id="error_explanation">
@@ -29,14 +29,14 @@
   </div>
   <div class="field form-group task-group">
     <%= f.label :task_id %><br>
-    <%= f.collection_select(:task_id, @tasks, :id, :name, class: 'form-control') %>
+    <%= f.collection_select(:task_id, project_default.tasks, :id, :name, class: 'form-control') %>
   </div>
   <div class="field form-group">
     <%= f.label :notes %><br>
     <%= f.text_area :notes, class: 'form-control' %>
   </div>
   <div class="field form-group add-cost-group">
-    <%= f.label :add_cost %><br>
+    <%= f.label 'Additional Costs' %><br>
     <div class="input-group">
       <span class="input-group-addon">$</span>
       <%= f.text_field :add_cost, class: 'form-control' %>
@@ -47,5 +47,4 @@
   </div>
 
   <% end %>
-
 </div>

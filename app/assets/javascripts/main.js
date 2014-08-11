@@ -35,8 +35,9 @@ $(function() {
       0 //0 is equal to last day of next month
     );
   };
+  //javascript creates a local version of datetimes on creation (6 hours behind UTC)
   Date.prototype.correct = function() {
-    this.setDate(this.getDate());
+    this.setHours(this.getHours() + 6);
   };
   Date.prototype.format = function() {
      return '' + this.getFullYear() + '-' + (this.getMonth() + 1) + '-' + this.getDate() + '';
@@ -45,12 +46,12 @@ $(function() {
   // ********* INITIALIZATION *********
   if (typeof gon != "undefined") {
     var date1 = new Date(gon.date1);
-
     var date2 = new Date(gon.date2);
+    var filter = gon.filter;
+
     date1.correct();
     date2.correct();
-
-    var filter = gon.filter;
+    $('#filter').val(filter);
   }
 
   // FILTER DROPDOWN 
@@ -58,41 +59,42 @@ $(function() {
     filter = $(this).val();
     $('.main-calendar').attr('data-filter', $(this).val());
   });
-  $('#filter').val(filter);
   // CALENDAR
-  $( ".main-calendar" ).datepicker({
-    dateFormat: 'yy-mm-dd',
-    showOtherMonths: true,
-    showMonth: true,
-    defaultDate: date1,
-    beforeShowDay: highlightDays,
-    onSelect: function(dateText, inst) {
-      var beg = new Date(dateText);
-      var end = new Date(dateText);
-      beg.correct();
-      end.correct();
+  if ( $('.main-calendar').length ) {
+    $(".main-calendar").datepicker({
+      dateFormat: 'yy-mm-dd',
+      showOtherMonths: true,
+      showMonth: true,
+      defaultDate: date1,
+      beforeShowDay: highlightDays,
+      onSelect: function(dateText, inst) {
+        var beg = new Date(dateText);
+        var end = new Date(dateText);
 
-      switch (filter) {
-        case 'daily':
-        break;
-        case 'weekly':
+        beg.correct();
+        end.correct();
+
+        switch (filter) {
+          case 'daily':
+          break;
+          case 'weekly':
           beg = beg.startOfWeek();
           end = end.endOfWeek();
           break;
-        case 'bi-weekly':
+          case 'bi-weekly':
           beg = beg.startOfWeek();
           end = end.endOfNextWeek();
           break;
-        case 'monthly':
+          case 'monthly':
           beg = beg.startOfMonth();
           end = end.endOfMonth();
           break;
+        }
+        
+        window.location = '/' + $('#filter').val() + '/shifts/' + beg.format() + '/' + end.format();
       }
-        console.log(beg.format());
-        console.log(end.format());
-    window.location = '/' + $('#filter').val() + '/shifts/' + beg.format() + '/' + end.format();
-    }
-  });
+    });
+  }
   
   function highlightDays(calendarDate) {
     // between months (start)
@@ -149,9 +151,21 @@ $(function() {
         });
       }
     });
-
   });
-    
+  // UPDATE TASKS
+  $('#shift_project_id').on('change', function(e) {
+    selectedProjectId = $(this).val();
+    $.ajax( {
+      type: 'get',
+      url: '/shifts/retreive_tasks',
+      data: { 'selected_project_id': selectedProjectId },
+      dataType: 'script',
+      error: function() {
+        alert('error');
+      }
+    });
+  });
+
   // ********* STYLING *********
   // bi-weekly hover styling 
   $('.main-calendar td').hover( function() {
@@ -167,7 +181,7 @@ $(function() {
     e.preventDefault();
     e.stopPropagation();
 
-    var editPath = '/daily/shifts/' + $("#shift_date_in").val() + '/'+ $("#shift_date_in").val() ;
+    var editPath = '/daily/shifts/' + $("#shift_date_in").val() + '/'+ $("#shift_date_in").val();
     window.location = editPath;
   });
 
@@ -186,13 +200,15 @@ $(function() {
     $('.projects-table tbody tr').removeClass('active');
     $(this).addClass('active');
     if ( $(this).data('id') == '-1' ) {
+      $('.new_task .new').prop('disabled', true);
       $('.tasks-table tbody tr').removeClass('hide');
     } else {
       $('.tasks-table tbody tr').addClass('hide');
       $('.tasks-table tbody tr[data-project-id="' + $(this).data('id') + '"]').removeClass('hide');
+      $('.new_task .new').prop('disabled', false);
     }
     displayNoTasksMessage();
   });
-
-
+  // DISABLE TASKS NEW BUTTON 
+  $('.all-projects').trigger('click');
 });

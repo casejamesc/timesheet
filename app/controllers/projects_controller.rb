@@ -10,11 +10,6 @@ class ProjectsController < ApplicationController
     @new_task = Task.new
   end
 
-  # GET /projects/1
-  # GET /projects/1.json
-  def show
-  end
-
   # GET /projects/new
   def new
     @project = Project.new
@@ -27,12 +22,17 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    Project.update_all({default: false}, {user_id: @current_user.id})
     @project = Project.new(project_params)
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
+        # only one project of a user can be the default
+        if @project.default
+          logger.debug 'asasdfasdfasfdasfdasfasdfasfasfasdfasfasf'
+          logger.debug @project.default.to_s
+          Project.where('id <> ?', @project.id ).update_all({default: false}, {user_id: @current_user.id})
+        end
+
         format.js
       else
         format.html { render action: 'new' }
@@ -44,10 +44,15 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    Project.update_all({default: false}, {user_id: @current_user.id})
-
     respond_to do |format|
       if @project.update(project_params)
+        # only one project of a user can be the default
+        logger.debug 'asasdfasdfasfdasfdasfasdfasfasfasdfasfasf'
+        logger.debug @project.default
+        if @project.default
+          Project.where('id <> ?', @project.id ).update_all({default: false}, {user_id: @current_user.id})
+        end
+
         format.html { redirect_to projects_path, notice: @project.name + ' was successfully updated.' }
         format.json { head :no_content }
       else

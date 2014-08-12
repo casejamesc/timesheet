@@ -63,8 +63,8 @@
             <td></td>
             <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
             <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
-            <td class="project"><%= link_to shift.project.name, edit_project_path(shift.project) %></td>
-            <td class="project"><%= link_to shift.task.name, edit_task_path(shift.task) %></td>
+            <td class="project"><%= link_to shift.project.name, edit_project_path(shift.project, selected: project_default.id) %></td>
+            <td class="task"><%= link_to shift.task.name, edit_task_path(shift.task, selected: task_default(project_default).id) %></td>
             <td class="hours"><%= shift.time if shift.time %></td>
             <td class="pay"><%= number_to_currency(shift.pay) %></td>
             <td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), shift, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>

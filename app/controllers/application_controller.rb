@@ -7,10 +7,20 @@ class ApplicationController < ActionController::Base
   before_action :update_history
 
   def authorize_user
-    @current_user = User.find(session[:user_id])
-    if !@current_user
+    if User.find_by(id: session[:user_id])
+      set_current_user
+    else
       redirect_to root_url, notice: "Please log in"
     end
+  end
+
+  def authorize_admin
+    authorize_user
+    redirect_to root_url, notice: "Please log in" unless @current_user.is_admin 
+  end
+
+  def set_current_user
+    @current_user = User.find(session[:user_id])
     @tasks = @current_user.tasks
     @projects = @current_user.projects
   end

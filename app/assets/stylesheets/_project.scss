@@ -9,6 +9,7 @@ input[type="checkbox"] {
 	width: 20px;
 	height: 20px;
 	margin: 0;
+	margin-top: 9px;
   outline: none;
 }
 
@@ -324,6 +325,47 @@ table {
 	width: 400px;
 }
 
+// REPORTS CREATE/ NEW
+.reports-create, .reports-new {
+	.panel {
+		width: 80%;
+		margin: 0 auto;
+	}
+	.panel-body {
+		padding: 20px 40px;
+	}
+	form label {
+		margin-top: -4px;
+	}
+
+	.date-in {
+		width: 160px;
+	}
+	.project, .task {
+		width: 140px;
+	}
+	.hours, .pay {
+		text-align: right;
+	}
+	.hours {
+		width: 65px;
+	}
+	.pay {
+		width: 72px;
+	}
+	.submit-wrapper {
+		margin-top: 30px;
+		.email {
+			float: right;
+			margin-left: 10px;
+			margin-right: 18px;
+		}
+		.submit {
+			float: right;
+		}
+	}
+}
+
 // PROJECTS(TASKS) INDEX
 table {
 	td {
@@ -380,9 +422,6 @@ table {
 	}
 	.no-tasks {
 		padding: 0 15px 20px;
-	}
-	input[type="checkbox"] {
-		margin-top: 8px;
 	}
 }
 

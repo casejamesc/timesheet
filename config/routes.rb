@@ -1,19 +1,4 @@
 Timesheet::Application.routes.draw do
-  get "reports/index"
-  get "reports/create"
-
-  resources :tasks, :except => [:show]
-  resources :projects, :except => [:show]
-
-  get "reports", :to => "reports#new", as: "reports"
-  post "reports/:date1/:date2", :to => "reports#create", as: "filtered_reports"
-
-  get ":filter/:sub_filter/shifts/:date1/:date2", :to => "shifts#index", as: "filtered_shifts_sub"
-  get ":filter/shifts/:date1/:date2", :to => "shifts#index", as: "filtered_shifts"
-  get "shifts/retreive_tasks", :to => "shifts#retreive_tasks"
-  
-  resources :shifts, :except => [:show]
-
   root :to => "sessions#new"
   controller :sessions do
     get '/' => :new
@@ -22,6 +7,19 @@ Timesheet::Application.routes.draw do
   end
 
   resources :users, :except => [:show]
+
+  get ":filter/:sub_filter/shifts/:date1/:date2", :to => "shifts#index", as: "filtered_shifts_sub"
+  get ":filter/shifts/:date1/:date2", :to => "shifts#index", as: "filtered_shifts"
+  get "shifts/retreive_tasks", :to => "shifts#retreive_tasks"
+  resources :shifts, :except => [:show]
+
+  controller :reports do
+    get '/reports/' => :new
+    post '/reports/create' => :create
+  end
+
+  resources :tasks, :except => [:show]
+  resources :projects, :except => [:show]
 
   match "*rest" => "sessions#rest", via: [:get, :post]
 

@@ -23,16 +23,9 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
-
+    
     respond_to do |format|
       if @project.save
-        # only one project of a user can be the default
-        if @project.default
-          logger.debug 'asasdfasdfasfdasfdasfasdfasfasfasdfasfasf'
-          logger.debug @project.default.to_s
-          Project.where('id <> ?', @project.id ).update_all({default: false}, {user_id: @current_user.id})
-        end
-
         format.js
       else
         format.html { render action: 'new' }
@@ -46,13 +39,6 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
-        # only one project of a user can be the default
-        logger.debug 'asasdfasdfasfdasfdasfasdfasfasfasdfasfasf'
-        logger.debug @project.default
-        if @project.default
-          Project.where('id <> ?', @project.id ).update_all({default: false}, {user_id: @current_user.id})
-        end
-
         format.html { redirect_to projects_path, notice: @project.name + ' was successfully updated.' }
         format.json { head :no_content }
       else

@@ -177,6 +177,7 @@ $(function() {
   });
 
   // ********* BY-PAGE *********
+  // *** SHIFTS EDIT ***
   $( ".shifts-edit .daily" ).on('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -184,6 +185,32 @@ $(function() {
     var editPath = '/daily/shifts/' + $("#shift_date_in").val() + '/'+ $("#shift_date_in").val();
     window.location = editPath;
   });
+
+  // *** REPORTS ***
+  $('#date1, #date2').on('change', function() {
+    if ( $(this).is(':checked') ) {
+      $('#task_id').removeClass('disabled');
+    } else {
+      $('#task_id').addClass('disabled');
+    }
+  });
+
+  $('.reports-new #project_filter, .reports-create #project_filter').on('change', function() {
+    if ( $(this).is(':checked') ) {
+      $('#project_id').removeClass('disabled');
+    } else {
+      $('#project_id').addClass('disabled');
+    }
+  });
+
+  $('.reports-new #task_filter, .reports-create #task_filter').on('change', function() {
+    if ( $(this).is(':checked') ) {
+      $('#task_id').removeClass('disabled');
+    } else {
+      $('#task_id').addClass('disabled');
+    }
+  });
+
 
   // *** PROJECTS/TASKS INDEX ***
   function displayNoTasksMessage() {

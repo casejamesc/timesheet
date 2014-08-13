@@ -44,11 +44,16 @@ gem 'bcrypt', '~> 3.1.7'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# JS VARS
 gem 'gon'
 
 gem 'jquery-turbolinks'
 
+# HEROKU
 gem 'rails_12factor'
 gem 'pg'
 
 ruby '2.1.1'
+
+# PDF
+# gem 'wicked_pdf'

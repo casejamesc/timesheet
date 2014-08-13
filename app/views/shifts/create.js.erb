@@ -5,7 +5,7 @@ $(function() {
     '<td class="edit"><%= link_to image_tag("icon-edit.png"), edit_shift_path(shift) %></td>' +
     '<td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") %></td>' +
     '<td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") %></td>' +
-    '<td class="project"><%= link_to shift.task.name, edit_task_path(shift.task) %></td>' +
+    '<td class="project"><%= link_to shift.project.name, edit_task_path(shift.project) %></td>' +
     '<td class="task"><%= link_to shift.task.name, edit_task_path(shift.task) %></td>' +
     '<td class="hours"><%= shift.time %></td>' +
     '<td class="pay"><%= number_to_currency(shift.pay) %></td>' +

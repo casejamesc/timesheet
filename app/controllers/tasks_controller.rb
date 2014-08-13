@@ -28,11 +28,6 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        # only one task of a project can be the default
-        if @task.default
-          Task.where('id <> ?', @task.id ).update_all({default: false}, {project_id: @task.project_id})
-        end
-
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.js
       else
@@ -47,11 +42,6 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
-        # only one task of a project can be the default
-        if @task.default
-          Task.where('id <> ?', @task.id ).update_all({default: false}, {project_id: @task.project_id})
-        end
-
         format.html { redirect_to tasks_path, notice: @task.name + ' was successfully updated.' }
         format.json { head :no_content }
       else

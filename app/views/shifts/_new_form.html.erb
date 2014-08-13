@@ -14,12 +14,12 @@
   <% end %>
   <div class="field form-group">
     <%= f.label :clock_in %><br>
-    <%= f.date_field :date_in, class: 'form-control', value: Date.today %>
+    <%= f.date_field :date_in, class: 'form-control', value: Date.today, required: true %>
     <%= f.time_field :clock_in, class: 'form-control', value: Time.now.to_s(:time) %>
   </div>
   <div class="field form-group">
     <%= f.label :clock_out %><br>
-    <%= f.date_field :date_out, class: 'form-control', value: Date.today %>
+    <%= f.date_field :date_out, class: 'form-control', value: Date.today, required: true %>
     <%= f.time_field :clock_out, class: 'form-control', value: Time.now.to_s(:time) %>
   </div>
   <div class="field form-group project-group">

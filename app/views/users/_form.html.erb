@@ -13,6 +13,14 @@
   <% end %>
 
   <div class="field form-group">
+    <%= f.label :first_name %><br>
+    <%= f.text_field :first_name, class: 'form-control' %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :last_name %><br>
+    <%= f.text_field :last_name, class: 'form-control' %>
+  </div>
+  <div class="field form-group">
     <%= f.label :username %><br>
     <%= f.text_field :username, class: 'form-control' %>
   </div>
@@ -23,14 +31,6 @@
   <div class="field form-group">
     <%= f.label :password_confirmation %><br>
     <%= f.password_field :password_confirmation, class: 'form-control' %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :first_name %><br>
-    <%= f.text_field :first_name, class: 'form-control' %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :last_name %><br>
-    <%= f.text_field :last_name, class: 'form-control' %>
   </div>
   <div class="actions">
     <%= f.submit 'Save', class: 'btn btn-default' %>

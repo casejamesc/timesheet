@@ -17,12 +17,20 @@ module ApplicationHelper
   end
 
   # can also use Date.today.advance(weeks: -1) here
+  def beginning_of_this_week
+    Date.today.beginning_of_week - 1.day
+  end
+
+  def end_of_this_week
+    Date.today.end_of_week - 1.day
+  end
+
   def beginning_of_last_week
-    Date.today.advance(weeks: -1).beginning_of_week
+    Date.today.advance(weeks: -1).beginning_of_week - 1.day
   end
 
   def end_of_last_week
-    Date.today.advance(weeks: -1).end_of_week
+    Date.today.advance(weeks: -1).end_of_week - 1.day
   end
 
   def beginning_of_last_month
@@ -32,6 +40,7 @@ module ApplicationHelper
   def end_of_last_month
     Date.today.advance(months: -1).end_of_month
   end
+
 
   def default(value)
     if value 
@@ -47,6 +56,14 @@ module ApplicationHelper
     else
       '-'
     end
+  end
+
+  def project_link(shift) 
+    shift.project ? ( link_to shift.project.name, edit_project_path(shift.project) ) : ''
+  end
+
+  def task_link(shift) 
+    shift.task ? ( link_to shift.task.name, edit_task_path(shift.task) ) : ''
   end
 
   def project_default

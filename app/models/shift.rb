@@ -21,4 +21,12 @@ class Shift < ActiveRecord::Base
   def pay
     self.duration * self.project.rate / 3600
   end
+
+  def project_name
+    self.project ? self.project.name : ''
+  end
+
+  def task_name
+    self.task ? self.task.name : ''
+  end
 end

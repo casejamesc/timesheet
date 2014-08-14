@@ -177,6 +177,25 @@ $(function() {
   });
 
   // ********* BY-PAGE *********
+  $( ".users-create.sign-up .new-user-trigger" ).text('Back To Login...');
+  // *** HOME-PAGE (SESSIONS-NEW) ***
+  $( ".new-user-trigger" ).on('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if ( $(this).text() == 'New User?' ) {
+      $(this).fadeOut('fast', function() {
+        $(this).text('Back To Login...').fadeIn('fast');
+      });
+    } else {
+      $(this).fadeOut('fast', function() {
+        $(this).text('New User?').fadeIn('fast');
+      });
+    }
+    $('.new-user-form').slideToggle();
+    $('.login-form').fadeToggle();
+  });
+
   // *** SHIFTS EDIT ***
   $( ".shifts-edit .daily" ).on('click', function(e) {
     e.preventDefault();

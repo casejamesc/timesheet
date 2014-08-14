@@ -5,8 +5,6 @@ class ShiftsController < ApplicationController
   # GET /retreive_tasks
   def retreive_tasks
     @selected_project_id = params[:selected_project_id]
-    logger.debug('before')
-    logger.debug(@selected_project_id)
     @selected_project = Project.find(@selected_project_id);
     @tasks = @selected_project.tasks
   end

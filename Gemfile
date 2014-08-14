@@ -61,3 +61,6 @@ ruby '2.1.1'
 gem 'wicked_pdf'
 
 gem 'wkhtmltopdf-binary'
+
+# EMAIL
+gem 'validates_email_format_of'

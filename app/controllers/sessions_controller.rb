@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   skip_before_filter :authorize_user
 
   def new
+    @user = User.new
   end
 
   def create

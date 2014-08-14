@@ -8,7 +8,7 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <%= csrf_meta_tags %>
 </head>
-<body class="<%= body_class %> <%= filter_class %>">
+<body class="<%= body_class %> <%= filter_class %> <%= params[:from] %>">
   <div class="main">
     <header class="main-header">
       <div class="wrapper">
@@ -30,9 +30,9 @@
                 <li class="divider"></li>
                 <li class="<%= in_path?("today") %>" ><%= link_to 'Today', filtered_shifts_sub_path('daily', 'today', Date.today, Date.today), "data-no-turbolink" => true %></li>
                 <li class="divider"></li>
-                <li class="<%= in_path?("this_week") %>" ><%= link_to 'This Week', filtered_shifts_sub_path('weekly', 'this_week', Date.today.beginning_of_week, Date.today.end_of_week) %></li>
+                <li class="<%= in_path?("this_week") %>" ><%= link_to 'This Week', filtered_shifts_sub_path('weekly', 'this_week', beginning_of_this_week, end_of_this_week) %></li>
                 <li class="<%= in_path?("last_week") %>"><%= link_to 'Last Week', filtered_shifts_sub_path('weekly', 'last_week', beginning_of_last_week, end_of_last_week) %></li>
-                <li class="<%= in_path?("last_two_weeks") %>"><%= link_to 'Last Two Weeks', filtered_shifts_sub_path('bi-weekly', 'last_two_weeks', beginning_of_last_week, Date.today.end_of_week) %></li>
+                <li class="<%= in_path?("last_two_weeks") %>"><%= link_to 'Last Two Weeks', filtered_shifts_sub_path('bi-weekly', 'last_two_weeks', beginning_of_last_week, end_of_this_week) %></li>
                 <li class="divider"></li>
                 <li class="<%= in_path?("this_month") %>"><%= link_to 'This Month', filtered_shifts_sub_path('monthly', 'this_month', Date.today.at_beginning_of_month, Date.today.at_end_of_month) %></li>
                 <li class="<%= in_path?("last_month") %>"><%= link_to 'Last Month', filtered_shifts_sub_path('monthly', 'last_month', beginning_of_last_month, end_of_last_month) %></li>

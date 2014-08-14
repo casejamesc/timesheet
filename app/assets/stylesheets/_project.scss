@@ -28,7 +28,12 @@ input[type="checkbox"] {
 .panel-heading {
 	font-weight: normal;
 }
-
+.new-link {
+	display: inline-block;
+	margin-left: 6px;
+	font-size: 22px;
+	font-weight: 700;
+}
 /* ============ HEADER ============ */
 .main-header {
 	z-index: 2;
@@ -185,6 +190,17 @@ table {
 /* ============ BY PAGE ============ */
 // HOME-PAGE
 .sessions-new {
+	.new-user-form {
+		display: none;
+	}
+}
+.users-create.sign-up {
+	.login-form {
+		display: none;
+	}
+}
+
+.sessions-new, .users-create.sign-up {
 	.main-header {
 		.main-header-top {
 			height: 200px;
@@ -209,13 +225,66 @@ table {
 		background: image-url('bg_grass.jpg') no-repeat;
 		background-size: cover;
 	}
-	.login_form {
+	.new-user-wrapper {
 		width: 350px;
 		margin: 0 auto;
-		margin-top: 120px;
+		margin-top: 100px;
 		input {
 			height: 40px;
 			margin-bottom: 7px;
+			border: 0;
+			@extend .text-m;
+			background: hsla(0, 0%, 100%, .6);
+			color: $shade3;
+			&:focus {
+				background: hsla(0, 0%, 100%, .8);
+			}
+		}
+		.name-wrapper, .pw-wrapper {
+			input {
+				float: left;
+				width: 48.9%;
+			}
+			margin-bottom: 7px;
+		}
+		.last-name {
+			margin-left: 7px;
+		}
+		.confirm {
+			margin-left: 7px;
+		}
+		[type="submit"] {
+			float: right;
+			color: $shade3;
+			&:hover {
+				background: hsla(0, 0%, 100%, .8);
+			}
+		}
+		#alert {
+			font-style: italic;
+			@extend .text-l;
+			margin-left: 10px;
+			margin-bottom: 20px;
+		}
+		.new-user-trigger {
+			float: right;
+			display: inline-block;
+			margin-bottom: 20px;
+			@extend .arch;
+			font-size: 22px;
+			font-weight: 500;
+			color: hsl(69, 9.8592%, 13.9216%);
+		}
+	}
+
+	.login-form {
+		width: 350px;
+		margin: 0 auto;
+		margin-top: 20px;
+		input {
+			height: 40px;
+			margin-bottom: 7px;
+			border: 0;
 			@extend .text-m;
 			background: hsla(0, 0%, 100%, .4);
 			color: $shade3;
@@ -242,6 +311,16 @@ table {
 // SHIFTS INDEX
 .shifts-index {
 	&.today, &.daily {
+		#alert {
+			margin-bottom: 20px;
+			text-transform: uppercase;
+			text-align: center;
+			@extend .arch;
+			font-size: 22px;
+			font-weight: 500;
+			font-style: italic;
+			color: hsl(120, 39%, 34%);
+		}
 		.new {
 			float: right;
 		}
@@ -442,7 +521,7 @@ table {
 }
 
 // PROJECT/TASKS EDIT 
-.projects-edit, .tasks-edit {
+.projects-edit, .projects-new, .tasks-edit {
 	.checkboxes {
 		padding-top: 5px;
 	}

@@ -1,0 +1,113 @@
+<div class="body-wrapper">
+  <h2>Generated Report: <%= @date1.strftime("%m/%-d/%Y") + ' - ' + @date2.strftime("%m/%-d/%Y") %></h2>
+  <% if @project_filter %>
+    <h4>Project: <%= @project.name %></h4>
+  <% end %>
+  <% if @task_filter %>
+    <h4>Task: <%= @task.name %></h4>
+  <% end %>
+  <%= form_tag '/reports/create.pdf', class: 'new-report form-horizontal' do %>
+  <div class="panel panel-default">
+    <div class="panel-heading">Criteria</div>
+    <div class="panel-body">
+      <div class="col-sm-6">
+        <div class="field form-group">
+          <%= label_tag 'From', nil, class: 'control-label col-sm-3' %>
+          <div class="col-sm-6">
+            <%= date_field_tag :date1, Date.today, { required: true, class: 'form-control' } %>
+          </div>
+        </div>
+        <div class="field form-group">
+          <%= label_tag 'To', nil, class: 'control-label col-sm-3' %>
+          <div class="col-sm-6">
+            <%= date_field_tag :date2, Date.today, { required: true, class: 'form-control' } %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field form-group">
+          <%= label_tag 'project_filter', 'Project', { class: 'control-label col-sm-3' } %>
+          <div class="col-sm-2">
+            <%= check_box_tag(:project_filter) %>
+          </div>
+          <div class="col-sm-6">
+            <%= select_tag(:project_id, options_from_collection_for_select(@projects, :id, :name), { selected: project_default.id, class: "form-control disabled" }) %>
+          </div>
+        </div>
+        <div class="field form-group">
+          <%= label_tag 'task_filter', 'Task', { class: 'control-label col-sm-3' } %>
+          <div class="col-sm-2">
+            <%= check_box_tag(:task_filter) %>
+          </div>
+          <div class="col-sm-6">
+            <%= select_tag(:task_id, options_from_collection_for_select(@tasks, :id, :name), { selected: task_default(project_default).id, class: "form-control disabled" })%>
+          </div>
+        </div>
+        <div class="submit-wrapper col-sm-12">
+          <%= link_to 'Email', '/reports/create.pdf', class: 'email btn btn-primary' %>
+          <%= submit_tag 'Generate', class: 'submit btn btn-success' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+
+  <div class="main-content">
+    <table class="shift-table table table-condensed">
+      <thead>
+        <tr>
+          <th class="date-in">Date</th>
+          <th class="clock-in">Clock in</th>
+          <th class="clock-out">Clock out</th>
+          <th class="project">Project</th>
+          <th class="task">Task</th>
+          <th class="hours">Hours</th>
+          <th class="pay">Pay</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% while @date1 <= @date2 do %>
+        <% dailyShifts = @shifts.by_day(@date1) %>
+        <% if dailyShifts.count == 0 %>
+        <tr>
+          <td class="date-in"><%= @date1.strftime("%m/%-d/%Y") %></td>
+          <td class="clock-in"><em>No shifts</em></td>
+          <td class="clock-out"></td>
+          <td class="project"></td>
+          <td class="task"></td>
+          <td class="hours"></td>
+          <td class="pay"></td>
+        </tr>
+        <% else %>
+        <% shift = dailyShifts.first %>
+        <tr data-id="<%= shift.id %>">
+          <td class="date-in"><%= shift.date_in.strftime("%m/%-d/%Y") if shift.date_in %></td>
+          <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
+          <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
+          <td class="project"><%= shift.project.name if shift.project %></td>
+          <td class="task"><%= shift.task.name if shift.task %></td>
+          <td class="hours"><%= shift.time if shift.time %></td>
+          <td class="pay"><%= number_to_currency(shift.pay) %></td>
+        </tr>
+        <% for i in 1..dailyShifts.count - 1 %>
+        <% shift = dailyShifts[i] %>
+        <tr class="grouped-shift" data-shift-id="<%= shift.id %>">
+          <td></td>
+          <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
+          <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
+          <td class="project"><%= shift.project.name %></td>
+          <td class="task"><%= shift.task.name %></td>
+          <td class="hours"><%= shift.time if shift.time %></td>
+          <td class="pay"><%= number_to_currency(shift.pay) %></td>
+        </tr>
+        <% end %>
+        <% end %>
+
+        <% @date1 += 1.day %>
+        <% end %>
+
+      </tbody>
+    </table>
+  </div>

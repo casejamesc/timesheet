@@ -1,0 +1,75 @@
+<div class="body-wrapper">
+  <div class="details">
+    <h4><%= @current_user.first_name %> <%= @current_user.last_name %></h4>
+    <h4><%= @current_user.email %></h4>
+    <h4><%= @date1.strftime("%m/%-d/%Y") + ' - ' + @date2.strftime("%m/%-d/%Y") %></h4>
+
+    <h4>
+      Hours worked: 
+      <% if @project_filter %>
+      Project: <%= @project.name %>
+      <% end %>
+      <% if @task_filter %>
+      , Task: <%= @task.name %>
+      <% end %>
+    </h4>
+  </div>
+
+  <div class="main-content">
+    <table class="shift-table table table-condensed">
+      <thead>
+        <tr>
+          <th class="date-in">Date</th>
+          <th class="clock-in">Clock in</th>
+          <th class="clock-out">Clock out</th>
+          <th class="project">Project</th>
+          <th class="task">Task</th>
+          <th class="hours">Hours</th>
+          <th class="pay">Pay</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% while @date1 <= @date2 do %>
+        <% dailyShifts = @shifts.by_day(@date1) %>
+        <% if dailyShifts.count == 0 %>
+        <tr>
+          <td class="date-in"><%= @date1.strftime("%m/%-d/%Y") %></td>
+          <td class="clock-in"><em>No shifts</em></td>
+          <td class="clock-out"></td>
+          <td class="project"></td>
+          <td class="task"></td>
+          <td class="hours"></td>
+          <td class="pay"></td>
+        </tr>
+        <% else %>
+        <% shift = dailyShifts.first %>
+        <tr data-id="<%= shift.id %>">
+          <td class="date-in"><%= shift.date_in.strftime("%m/%-d/%Y") if shift.date_in %></td>
+          <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
+          <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
+          <td class="project"><%= shift.project.name if shift.project %></td>
+          <td class="task"><%= shift.task.name if shift.task %></td>
+          <td class="hours"><%= shift.time if shift.time %></td>
+          <td class="pay"><%= number_to_currency(shift.pay) %></td>
+        </tr>
+        <% for i in 1..dailyShifts.count - 1 %>
+        <% shift = dailyShifts[i] %>
+        <tr class="grouped-shift" data-shift-id="<%= shift.id %>">
+          <td></td>
+          <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
+          <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
+          <td class="project"><%= shift.project.name %></td>
+          <td class="task"><%= shift.task.name %></td>
+          <td class="hours"><%= shift.time if shift.time %></td>
+          <td class="pay"><%= number_to_currency(shift.pay) %></td>
+        </tr>
+        <% end %>
+        <% end %>
+
+        <% @date1 += 1.day %>
+        <% end %>
+
+      </tbody>
+    </table>
+  </div>

@@ -5,7 +5,7 @@
     <p id="alert"><%= flash[:notice] %></p>
     <% end %>
     <%= form_tag do %>
-      <%= text_field_tag :name, params[:name], class: 'form-control', placeholder: 'Username' %>
+      <%= text_field_tag :username, params[:username], class: 'form-control', placeholder: 'Username' %>
       <%= password_field_tag :password, params[:password], class: 'form-control', placeholder: 'Password' %>
       <%= submit_tag "Login", class: 'btn btn-default' %>
     <% end %>

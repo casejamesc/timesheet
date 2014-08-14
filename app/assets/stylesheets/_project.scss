@@ -25,6 +25,9 @@ input[type="checkbox"] {
 	pointer-events: none;
 	opacity: .6;
 }
+.panel-heading {
+	font-weight: normal;
+}
 
 /* ============ HEADER ============ */
 .main-header {
@@ -327,34 +330,27 @@ table {
 
 // REPORTS CREATE/ NEW
 .reports-create, .reports-new {
-	.panel {
-		width: 80%;
+	.main-content {
+		width: 100%;
+	}
+	.body-wrapper {
+		width: 920px;
 		margin: 0 auto;
+	}
+	h2 {
+		margin-bottom: 50px;
 	}
 	.panel-body {
 		padding: 20px 40px;
 	}
-	form label {
-		margin-top: -4px;
-	}
-
-	.date-in {
-		width: 160px;
-	}
-	.project, .task {
-		width: 140px;
-	}
-	.hours, .pay {
-		text-align: right;
-	}
-	.hours {
-		width: 65px;
-	}
-	.pay {
-		width: 72px;
+	.new-report {
+		margin-bottom: 80px;
+		label {
+			margin-top: -4px;
+		}
 	}
 	.submit-wrapper {
-		margin-top: 30px;
+		margin: 15px 0;
 		.email {
 			float: right;
 			margin-left: 10px;
@@ -362,6 +358,26 @@ table {
 		}
 		.submit {
 			float: right;
+		}
+	}
+	.shift-table {
+		th {
+			text-transform: uppercase;
+		}
+		.date-in {
+			width: 160px;
+		}
+		.project, .task {
+			width: 140px;
+		}
+		.hours, .pay {
+			text-align: right;
+		}
+		.hours {
+			width: 65px;
+		}
+		.pay {
+			width: 72px;
 		}
 	}
 }

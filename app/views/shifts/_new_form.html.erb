@@ -24,11 +24,11 @@
   </div>
   <div class="field form-group project-group">
     <%= f.label :project_id %><br>
-    <%= f.collection_select(:project_id, @projects, :id, :name, class: 'form-control', selected: project_default.id) %>
+    <%= f.collection_select(:project_id, @projects, :id, :name, { class: 'form-control', selected: project_default.id} ) %>
   </div>
   <div class="field form-group task-group">
     <%= f.label :task_id %><br>
-    <%= f.collection_select(:task_id, project_default.tasks, :id, :name, class: 'form-control', selected: task_default(project_default).id) %>
+    <%= f.collection_select(:task_id, project_default.tasks, :id, :name, { class: 'form-control', selected: task_default(project_default).id } ) %>
   </div>
   <div class="field form-group">
     <%= f.label :notes %><br>

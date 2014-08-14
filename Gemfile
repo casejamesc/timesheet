@@ -56,4 +56,6 @@ gem 'pg'
 ruby '2.1.1'
 
 # PDF
-# gem 'wicked_pdf'
+gem 'wicked_pdf'
+
+gem 'wkhtmltopdf-binary'

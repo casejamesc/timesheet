@@ -50,7 +50,9 @@ gem 'gon'
 gem 'jquery-turbolinks'
 
 # HEROKU
-gem 'rails_12factor'
+group :production do
+  gem 'rails_12factor'
+end
 gem 'pg'
 
 ruby '2.1.1'

@@ -1,0 +1,7 @@
+<select id="<%= @task_id %>" class="<%= @task_class %>" name="<%= @task_name %>">
+  <% @tasks.each do |task| %>
+    <option value="<%= task.id %>"><%= task.name %></option>
+  <% end %>
+</select>
+
+

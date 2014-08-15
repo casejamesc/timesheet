@@ -410,6 +410,7 @@ table {
 // REPORTS CREATE/ NEW
 .reports-create, .reports-new {
 	.main-content {
+		float: none;
 		width: 100%;
 	}
 	.body-wrapper {
@@ -417,29 +418,29 @@ table {
 		margin: 0 auto;
 	}
 	h2 {
-		margin-bottom: 50px;
+		float: left;
+		margin-bottom: 30px;
+	}
+	.generate, .email, .preview, .email-address {
+		float: right;
+		margin-right: 8px;
+	}
+	.email-wrapper {
+		.email-address {
+			width: 162px;
+		}
 	}
 	.panel-body {
 		padding: 20px 40px;
 	}
 	.new-report {
-		margin-bottom: 80px;
+		margin-bottom: 50px;
 		label {
 			margin-top: -4px;
 		}
 	}
-	.submit-wrapper {
-		margin: 15px 0;
-		.email {
-			float: right;
-			margin-left: 10px;
-			margin-right: 18px;
-		}
-		.submit {
-			float: right;
-		}
-	}
 	.shift-table {
+		margin-top: 40px;
 		th {
 			text-transform: uppercase;
 		}

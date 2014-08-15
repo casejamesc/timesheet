@@ -1,6 +1,19 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
+  # GET /retreive_tasks
+  def retreive_tasks
+    @project_id = params[:project_id]
+    @project = Project.find(@project_id);
+    @tasks = @project.tasks
+
+    @task_id = params[:task_id]
+    @task_class = params[:task_class]
+    @task_name = params[:task_name]
+
+    render layout: false
+  end
+
   # GET /tasks
   # GET /tasks.json
   def index

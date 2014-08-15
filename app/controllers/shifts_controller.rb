@@ -2,13 +2,6 @@ class ShiftsController < ApplicationController
   before_action :set_shift, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user, except: [:retreive_tasks]
 
-  # GET /retreive_tasks
-  def retreive_tasks
-    @selected_project_id = params[:selected_project_id]
-    @selected_project = Project.find(@selected_project_id);
-    @tasks = @selected_project.tasks
-  end
-
   # GET /shifts
   # GET /shifts.json
   def index

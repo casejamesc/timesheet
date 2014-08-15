@@ -10,15 +10,16 @@ Timesheet::Application.routes.draw do
 
   get ":filter/:sub_filter/shifts/:date1/:date2", :to => "shifts#index", as: "filtered_shifts_sub"
   get ":filter/shifts/:date1/:date2", :to => "shifts#index", as: "filtered_shifts"
-  get "shifts/retreive_tasks", :to => "shifts#retreive_tasks"
   resources :shifts, :except => [:show]
 
   controller :reports do
-    get '/reports/' => :new
+    get '/reports/new' => :new
     post '/reports/create' => :create
   end
 
+  get "tasks/retreive_tasks", :to => "tasks#retreive_tasks"
   resources :tasks, :except => [:show]
+
   resources :projects, :except => [:show]
 
   match "*rest" => "sessions#rest", via: [:get, :post]

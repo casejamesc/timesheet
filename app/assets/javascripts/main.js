@@ -153,15 +153,25 @@ $(function() {
     });
   });
   // UPDATE TASKS
-  $('#shift_project_id').on('change', function(e) {
-    selectedProjectId = $(this).val();
+  $('.rt-project').on('change', function(e) {
+    console.log('hey');
+    var project = $(this);
+    var rt_container = project.closest('.rt-pair');
+    var task = rt_container.find('.rt-task');
+    var task_container = task.parent();
+
+    var project_id = project.val();
     $.ajax( {
       type: 'get',
-      url: '/shifts/retreive_tasks',
-      data: { 'selected_project_id': selectedProjectId },
-      dataType: 'script',
+      url: '/tasks/retreive_tasks',
+      data: { 'project_id': project_id, 'task_id': task.attr('id'), 'task_class': task.attr('class'), 'task_name': task.attr('name') },
+      dataType: 'text',
       error: function() {
         alert('error');
+      },
+      success: function(data) {
+        task.remove();
+        task_container.append($(data));
       }
     });
   });
@@ -206,30 +216,53 @@ $(function() {
   });
 
   // *** REPORTS ***
-  $('#date1, #date2').on('change', function() {
-    if ( $(this).is(':checked') ) {
-      $('#task_id').removeClass('disabled');
-    } else {
-      $('#task_id').addClass('disabled');
-    }
-  });
-
-  $('.reports-new #project_filter, .reports-create #project_filter').on('change', function() {
-    if ( $(this).is(':checked') ) {
+  function enableDisableProjects(checkbox) {
+    if ( checkbox.is(':checked') ) {
       $('#project_id').removeClass('disabled');
     } else {
       $('#project_id').addClass('disabled');
     }
-  });
+  }
 
-  $('.reports-new #task_filter, .reports-create #task_filter').on('change', function() {
-    if ( $(this).is(':checked') ) {
+  function enableDisableTasks(checkbox) {
+    if ( checkbox.is(':checked') ) {
       $('#task_id').removeClass('disabled');
     } else {
       $('#task_id').addClass('disabled');
     }
+  }
+
+  $('.reports-new #project_filter, .reports-create #project_filter').on('change', function() {
+    enableDisableProjects($(this));
   });
 
+  $('.reports-new #task_filter, .reports-create #task_filter').on('change', function() {
+    enableDisableTasks($(this));
+  });
+
+  function populateEmailAddress() {
+    $('#email_address').val( $('#project_id :selected').data('email') );
+  }
+
+  $('.reports-create #project_id').on('change', function() {
+    populateEmailAddress();
+  });
+
+  // SUBMIT FORM TO DIFFERENT ACTIONS
+  $('.new-report input[type=submit]').on('click', function(e) {
+    if ( $(this).val() == 'Preview' ) {
+      $('.new-report').attr('action', '/reports/create.pdf');
+    } else if ( $(this).val() == 'Email' ) {
+      $('.new-report').attr('action', '/reports/create.json');
+    } else {
+      $('.new-report').attr('action', '/reports/create.html');
+    }
+  });
+
+  // INITIALIZATION
+  enableDisableProjects($('.reports-create #project_filter'));
+  enableDisableTasks($('.reports-create #task_filter'));
+  populateEmailAddress();
 
   // *** PROJECTS/TASKS INDEX ***
   function displayNoTasksMessage() {

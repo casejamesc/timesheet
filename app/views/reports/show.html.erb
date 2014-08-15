@@ -1,57 +1,54 @@
 <div class="body-wrapper">
-  <h2>Generated Report: <%= @date1.strftime("%m/%-d/%Y") + ' - ' + @date2.strftime("%m/%-d/%Y") %></h2>
-  <% if @project_filter %>
-    <h4>Project: <%= @project.name %></h4>
-  <% end %>
-  <% if @task_filter %>
-    <h4>Task: <%= @task.name %></h4>
-  <% end %>
-  <%= form_tag '/reports/create.pdf', class: 'new-report form-horizontal' do %>
-  <div class="panel panel-default">
-    <div class="panel-heading">Criteria</div>
+  <%= form_tag '/reports/create.html', { target: "_blank", class: 'new-report form-horizontal' } do %>
+  <div class="title-actions-wrapper clearfix">
+    <h2>Create Report</h2>
+    <div class="email-wrapper">
+      <%= text_field_tag :email_address, '', class: 'email-address form-control' %>
+      <%= submit_tag 'Email', class: 'email btn btn-primary' %>
+    </div>
+    <%= submit_tag 'Preview', class: 'preview btn btn-success' %>
+    <%= submit_tag 'Generate', class: 'generate btn btn-success' %>
+  </div>
+  <div class="panel panel-default clearfix">
+    <div class="panel-heading"></div>
     <div class="panel-body">
       <div class="col-sm-6">
         <div class="field form-group">
           <%= label_tag 'From', nil, class: 'control-label col-sm-3' %>
           <div class="col-sm-6">
-            <%= date_field_tag :date1, Date.today, { required: true, class: 'form-control' } %>
+            <%= date_field_tag :date1, @date1, { required: true, class: 'form-control' } %>
           </div>
         </div>
         <div class="field form-group">
           <%= label_tag 'To', nil, class: 'control-label col-sm-3' %>
           <div class="col-sm-6">
-            <%= date_field_tag :date2, Date.today, { required: true, class: 'form-control' } %>
+            <%= date_field_tag :date2, @date2, { required: true, class: 'form-control' } %>
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6 rt-pair">
         <div class="field form-group">
           <%= label_tag 'project_filter', 'Project', { class: 'control-label col-sm-3' } %>
           <div class="col-sm-2">
-            <%= check_box_tag(:project_filter) %>
+            <%= check_box_tag(:project_filter, true, @project_filter) %>
           </div>
           <div class="col-sm-6">
-            <%= select_tag(:project_id, options_from_collection_for_select(@projects, :id, :name), { selected: project_default.id, class: "form-control disabled" }) %>
+            <%= select_tag(:project_id, options_for_select(@projects.map{ |p| [p.name, p.id, { 'data-email' => p.email, selected_id: @project.id } ] } ), class: "rt-task form-control" ) %>
           </div>
         </div>
         <div class="field form-group">
           <%= label_tag 'task_filter', 'Task', { class: 'control-label col-sm-3' } %>
           <div class="col-sm-2">
-            <%= check_box_tag(:task_filter) %>
+            <%= check_box_tag(:task_filter, true, @task_filter) %>
           </div>
           <div class="col-sm-6">
-            <%= select_tag(:task_id, options_from_collection_for_select(@tasks, :id, :name), { selected: task_default(project_default).id, class: "form-control disabled" })%>
+            <%= select_tag(:task_id, options_from_collection_for_select(@project.tasks, :id, :name, @task.id), class: "rt-task form-control" ) %>
           </div>
-        </div>
-        <div class="submit-wrapper col-sm-12">
-          <%= link_to 'Email', '/reports/create.pdf', class: 'email btn btn-primary' %>
-          <%= submit_tag 'Generate', class: 'submit btn btn-success' %>
         </div>
       </div>
     </div>
   </div>
   <% end %>
-
 
   <div class="main-content">
     <table class="shift-table table table-condensed">
@@ -97,8 +94,8 @@
           <td></td>
           <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
           <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
-          <td class="project"><%= shift.project.name %></td>
-          <td class="task"><%= shift.task.name %></td>
+          <td class="project"><%= shift.project.name if shift.project %></td>
+          <td class="task"><%= shift.task.name if shift.task %></td>
           <td class="hours"><%= shift.time if shift.time %></td>
           <td class="pay"><%= number_to_currency(shift.pay) %></td>
         </tr>

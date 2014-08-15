@@ -59,8 +59,8 @@
           <td></td>
           <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
           <td class="clock-out"><%= shift.clock_out.strftime("%l:%M %p") if shift.clock_out %></td>
-          <td class="project"><%= shift.project.name %></td>
-          <td class="task"><%= shift.task.name %></td>
+          <td class="project"><%= shift.project.name if shift.project %></td>
+          <td class="task"><%= shift.task.name if shift.task %></td>
           <td class="hours"><%= shift.time if shift.time %></td>
           <td class="pay"><%= number_to_currency(shift.pay) %></td>
         </tr>

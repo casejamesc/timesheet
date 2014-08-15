@@ -22,13 +22,15 @@
     <%= f.date_field :date_out, class: 'form-control' %>
     <%= f.time_field :clock_out, class: 'form-control' %>
   </div>
-  <div class="field form-group project-group">
-    <%= f.label :project %> <%= link_to '+', new_project_path, class: 'new-link' %><br>
-    <%= f.collection_select(:project_id, @projects, :id, :name, class: 'form-control') %>
-  </div>
-  <div class="field form-group task-group">
-    <%= f.label :task %> <%= link_to '+', new_task_path, class: 'new-link' %><br>
-    <%= f.collection_select(:task_id, project_default.tasks, :id, :name, class: 'form-control') %>
+  <div class="rt-pair">
+    <div class="field form-group project-group">
+      <%= f.label :project %> <%= link_to '+', new_project_path, class: 'new-link' %><br>
+      <%= f.collection_select(:project_id, @projects, :id, :name, {}, { class: "rt-project form-control" }) %>
+    </div>
+    <div class="field form-group task-group">
+      <%= f.label :task %> <%= link_to '+', new_task_path, class: 'new-link' %><br>
+      <%= f.collection_select(:task_id, project_default.tasks, :id, :name, {}, { class: "rt-task form-control" } ) %>
+    </div>
   </div>
   <div class="field form-group">
     <%= f.label :notes %><br>

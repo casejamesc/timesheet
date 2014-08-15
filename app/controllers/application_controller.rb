@@ -30,4 +30,8 @@ class ApplicationController < ActionController::Base
     session[:last_page] = session[:current_page]
     session[:current_page] = request.fullpath
   end
+
+  def make_boolean(str)
+    str == "0" ? false : true
+  end
 end

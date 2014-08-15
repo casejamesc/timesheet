@@ -64,12 +64,12 @@
     <thead>
     </thead>
     <tbody>
-      <tr>
+      <tr class="rt-pair">
         <td class="edit"></td>
         <td class="clock-in"><%= f.time_field :clock_in, class: "form-control", value: Time.now.localtime.to_s(:time) %></td>
         <td class="clock-out"><%= f.time_field :clock_out, class: "form-control", value: Time.now.localtime.to_s(:time) %></td>
-        <td class="project"><%= f.collection_select(:project_id, @projects, :id, :name, class: "form-control", selected: project_default.id) %></td>
-        <td class="task"><%= f.collection_select(:task_id, project_default.tasks, :id, :name, class: "form-control", selected: task_default(project_default).id) %></td>
+        <td class="project"><%= f.collection_select(:project_id, @projects, :id, :name, { selected: project_default.id }, { class: "rt-project form-control" }) %></td>
+        <td class="task"><%= f.collection_select(:task_id, project_default.tasks, :id, :name, { selected: task_default(project_default).id }, { class: "rt-task form-control" } ) %></td>
         <td class="hours"></td>
         <td colspan="2" class="action"><%= f.submit 'New', class: 'new btn btn-success' %></td>
       </tr>

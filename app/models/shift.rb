@@ -7,6 +7,8 @@ class Shift < ActiveRecord::Base
 
   scope :by_date_range, -> (date1, date2) { where("date_in >= ? AND date_out <= ?", date1, date2 ).order("clock_in ASC") }
   scope :by_day, -> (date) { where("date_in = ?", date ) }
+  scope :by_project, -> (project) { where("project_id = ?", project.id ) }
+  scope :by_task, -> (task) { where("task_id = ?", task.id ) }
 
   def duration
     self.clock_out - self.clock_in
@@ -19,7 +21,13 @@ class Shift < ActiveRecord::Base
   end
 
   def pay
-    self.duration * self.project.rate / 3600
+    if self.task && self.task.rate
+      self.duration * self.task.rate / 3600
+    elsif self.project && self.project.rate
+      self.duration * self.project.rate / 3600
+    else
+      '0.00'
+    end
   end
 
   def project_name

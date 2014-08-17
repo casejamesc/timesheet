@@ -44,7 +44,7 @@
               <ul class="dropdown-menu" role="menu">
                 <li class="<%= in_path?("reports/new") %>"><%= link_to 'New', reports_new_path %></li>
                 <li class="divider"></li>
-                <li class="<%= in_path?("reports/create") %>"><%= link_to 'This Week', filtered_shifts_path('weekly', Date.beginning_of_week, Date.today) %></li>
+                <li class="<%= in_path?("reports/create") %>"><%= link_to 'This Week', reports_create_path(date1: beginning_of_this_week, date2: end_of_this_week) %></li>
                 <li class="<%= in_path?("reports/create") %>"><%= link_to 'Last Week', filtered_shifts_path('weekly', beginning_of_last_week, end_of_last_week) %></li>
                 <li class="<%= in_path?("reports/create") %>"><%= link_to 'Last Two Weeks', filtered_shifts_path('bi-weekly', beginning_of_last_week, Date.today) %></li>
                 <li class="divider"></li>

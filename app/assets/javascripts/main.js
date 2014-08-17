@@ -251,10 +251,16 @@ $(function() {
   // SUBMIT FORM TO DIFFERENT ACTIONS
   $('.new-report input[type=submit]').on('click', function(e) {
     if ( $(this).val() == 'Preview' ) {
+      $('.new-report').attr('target', "_blank");
+      $('.new-report').removeAttr('data-remote');
       $('.new-report').attr('action', '/reports/create.pdf');
     } else if ( $(this).val() == 'Email' ) {
+      $('.new-report').removeAttr('target');
+      $('.new-report').attr('data-remote', true);
       $('.new-report').attr('action', '/reports/create.json');
     } else {
+      $('.new-report').removeAttr('target');
+      $('.new-report').removeAttr('data-remote');
       $('.new-report').attr('action', '/reports/create.html');
     }
   });

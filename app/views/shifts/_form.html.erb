@@ -29,7 +29,7 @@
     </div>
     <div class="field form-group task-group">
       <%= f.label :task %> <%= link_to '+', new_task_path, class: 'new-link' %><br>
-      <%= f.collection_select(:task_id, project_default.tasks, :id, :name, {}, { class: "rt-task form-control" } ) %>
+      <%= f.collection_select(:task_id, @shift.project.tasks, :id, :name, {}, { class: "rt-task form-control" } ) %>
     </div>
   </div>
   <div class="field form-group">

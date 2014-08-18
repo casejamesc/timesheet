@@ -13,6 +13,7 @@ class ReportsController < ApplicationController
   end
 
   def create
+    logger.debug @current_user.first_name
     @action = params[:commit]
 
     @date1 = params[:date1].to_date
@@ -21,6 +22,7 @@ class ReportsController < ApplicationController
     @task_filter = params[:task_filter]
     @project = Project.find_by(id: params[:project_id])
     @task = Task.find_by(id: params[:task_id])
+    @email_address = params[:email_address]
 
     @shifts = @current_user.shifts.by_date_range(@date1, @date2)
     if @project_filter

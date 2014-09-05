@@ -5,30 +5,23 @@ class ReportsController < ApplicationController
   respond_to :html, :js, :pdf
 
   def show    
-    
   end
 
   def new  
-   
+    @report = Report.new
   end
 
   def create
-    logger.debug @current_user.first_name
-    @action = params[:commit]
+    @report = Report.new(report_params)
+    @date1 = @report.date1.to_date
+    @date2 = @report.date2.to_date
+    @project = Project.find_by(id: @report.project_id)
+    @task = Task.find_by(id: @report.task_id)
 
-    @date1 = params[:date1].to_date
-    @date2 = params[:date2].to_date
-    @project_filter = params[:project_filter]
-    @task_filter = params[:task_filter]
-    @project = Project.find_by(id: params[:project_id])
-    @task = Task.find_by(id: params[:task_id])
-    @email_address = params[:email_address]
-
-    @shifts = @current_user.shifts.by_date_range(@date1, @date2)
-    if @project_filter
+    @shifts = @current_user.shifts.by_date_range(@report.date1, @report.date2)
+    if make_boolean @report.project_filter
       @shifts = @shifts.by_project(@project)
-    end
-    if @task_filter
+    elsif make_boolean @report.task_filter
       @shifts = @shifts.by_task(@task)
     end
 
@@ -47,5 +40,10 @@ class ReportsController < ApplicationController
     end
   end
 
-
+  private
+  
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def report_params
+    params.require(:report).permit(:date1, :date2, :project_filter, :task_filter, :project_id, :task_id, :email)
+  end
 end

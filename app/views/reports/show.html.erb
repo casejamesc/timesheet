@@ -1,53 +1,58 @@
 <div class="body-wrapper">
-  <%= form_tag '/reports/create.html', { class: 'new-report form-horizontal' } do %>
-  <div class="title-actions-wrapper clearfix">
-    <h2>Create Report</h2>
+  <%= form_for(@report, { class: 'new-report form-horizontal' }) do |f| %>
+
+  <div class="reports-actions-wrapper clearfix">
+    <h2>Create Report </h2>
     <div class="email-wrapper">
-      <%= text_field_tag :email_address, '', class: 'email-address form-control' %>
+      <%= f.text_field :email, class: 'email-address form-control' %>
       <%= submit_tag 'Email', class: 'email btn btn-primary' %>
     </div>
-    <%= submit_tag 'Preview', class: 'preview btn btn-success' %>
-    <%= submit_tag 'Generate', class: 'generate btn btn-success' %>
+    <%= f.submit 'Preview', class: 'preview btn btn-success' %>
+    <%= f.submit 'Generate', class: 'generate btn btn-success' %>
   </div>
-  <div class="panel panel-default clearfix">
-    <div class="panel-heading"></div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4></h4></div>
     <div class="panel-body">
       <div class="col-sm-6">
-        <div class="field form-group">
-          <%= label_tag 'From', nil, class: 'control-label col-sm-3' %>
+        <div class="field form-group clearfix">
+          <%= f.label :date1, 'From', class: 'control-label col-sm-3' %>
           <div class="col-sm-6">
-            <%= date_field_tag :date1, @date1, { required: true, class: 'form-control' } %>
+            <%= f.date_field :date1, class: 'form-control', value: @date1 %>
           </div>
         </div>
         <div class="field form-group">
-          <%= label_tag 'To', nil, class: 'control-label col-sm-3' %>
+          <%= f.label :date2, 'To', class: 'control-label col-sm-3' %>
           <div class="col-sm-6">
-            <%= date_field_tag :date2, @date2, { required: true, class: 'form-control' } %>
+            <%= f.date_field :date2, class: 'form-control', value: @date2 %>
           </div>
         </div>
       </div>
       <div class="col-sm-6 rt-pair">
-        <div class="field form-group">
-          <%= label_tag 'project_filter', 'Project', { class: 'control-label col-sm-3' } %>
+        <div class="field form-group clearfix">
+          <%= f.label :project_filter, 'Project', class: 'control-label col-sm-3' %>
           <div class="col-sm-2">
-            <%= check_box_tag(:project_filter, true, @project_filter) %>
+            <%= f.check_box(:project_filter) %>
           </div>
           <div class="col-sm-6">
-            <%= select_tag(:project_id, options_for_select(@projects.map{ |p| [p.name, p.id, { 'data-email' => p.email, selected_id: @project.id } ] } ), class: "rt-task form-control" ) %>
+            <%#= f.collection_select(:project_id, @projects, :id, :name, {}, { class: "rt-project form-control" }) %>
+            <%= f.select :project_id, options_for_select(@projects.map{ |p| [p.name, p.id, { 'data-email' => p.email } ] } ), { },class: "rt-project form-control" %>
+
           </div>
         </div>
         <div class="field form-group">
-          <%= label_tag 'task_filter', 'Task', { class: 'control-label col-sm-3' } %>
+          <%= f.label :task_filter, 'Task', class: 'control-label col-sm-3' %>
           <div class="col-sm-2">
-            <%= check_box_tag(:task_filter, true, @task_filter) %>
+            <%= f.check_box(:task_filter) %>
           </div>
           <div class="col-sm-6">
-            <%= select_tag(:task_id, options_from_collection_for_select(@project.tasks, :id, :name, @task.id), class: "rt-task form-control" ) %>
+            <%= f.collection_select(:task_id, @project.tasks, :id, :name, { include_blank: "- Please Select -" }, { class: "rt-task form-control" } ) %>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <% end %>
 
   <div class="main-content">
@@ -69,7 +74,7 @@
         <% dailyShifts = @shifts.by_day(@date1) %>
         <% if dailyShifts.count == 0 %>
         <tr>
-          <td class="date-in"><%= @date1.strftime("%m/%-d/%Y") %></td>
+          <td class="date-in"><%= @date1.strftime("%m/%-d/%Y") if @date1 %></td>
           <td class="clock-in"><em>No shifts</em></td>
           <td class="clock-out"></td>
           <td class="project"></td>

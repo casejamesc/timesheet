@@ -13,10 +13,9 @@
     <header class="main-header">
       <div class="wrapper">
         <div class="main-header-top">
-          <div class="logo">
-            <%= image_tag "logo.png"%>
-            <span>ShiftKeeper</span>
-          </div> 
+          <%= link_to filtered_shifts_path('daily', Date.today, Date.today), class: "logo" do %>
+          <%= image_tag("logo.png") %> <span>ShiftKeeper</span>
+          <% end %>
         </div>
         <a class="login" href="">Sign In <i class="fa fa-arrow-left"></i></a>
       </div>
@@ -26,30 +25,43 @@
             <li class="<%= in_path?("shifts") %> dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Shifts<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li class="<%= in_path?("shifts/new") %>" ><%= link_to 'New', new_shift_path %></li>
+                <%= nav_link 'New', new_shift_path, {}, 
+                { wrapper: 'li', selected_class: 'active' } %>
                 <li class="divider"></li>
-                <li class="<%= in_path?("today") %>" ><%= link_to 'Today', filtered_shifts_sub_path('daily', 'today', Date.today, Date.today), "data-no-turbolink" => true %></li>
+                <%= nav_link 'Today', filtered_shifts_path('daily', Date.today, Date.today), {}, 
+                { wrapper: 'li', selected_class: 'active' } %>
                 <li class="divider"></li>
-                <li class="<%= in_path?("this_week") %>" ><%= link_to 'This Week', filtered_shifts_sub_path('weekly', 'this_week', beginning_of_this_week, end_of_this_week) %></li>
-                <li class="<%= in_path?("last_week") %>"><%= link_to 'Last Week', filtered_shifts_sub_path('weekly', 'last_week', beginning_of_last_week, end_of_last_week) %></li>
-                <li class="<%= in_path?("last_two_weeks") %>"><%= link_to 'Last Two Weeks', filtered_shifts_sub_path('bi-weekly', 'last_two_weeks', beginning_of_last_week, end_of_this_week) %></li>
+                <%= nav_link 'This Week', filtered_shifts_path('weekly', beginning_of_this_week, end_of_this_week), {},
+                { wrapper: 'li', selected_class: 'active' } %>
+                <%= nav_link 'Last Week', filtered_shifts_path('weekly', beginning_of_last_week, end_of_last_week), {}, 
+                { wrapper: 'li', selected_class: 'active' } %>
+                <%= nav_link 'Last Two Weeks', filtered_shifts_path('bi-weekly', beginning_of_last_week, end_of_this_week), {},
+                { wrapper: 'li', selected_class: 'active' } %>
                 <li class="divider"></li>
-                <li class="<%= in_path?("this_month") %>"><%= link_to 'This Month', filtered_shifts_sub_path('monthly', 'this_month', Date.today.at_beginning_of_month, Date.today.at_end_of_month) %></li>
-                <li class="<%= in_path?("last_month") %>"><%= link_to 'Last Month', filtered_shifts_sub_path('monthly', 'last_month', beginning_of_last_month, end_of_last_month) %></li>
+                <%= nav_link 'This Month', filtered_shifts_path('monthly', Date.today.at_beginning_of_month, Date.today.at_end_of_month), {}, 
+                { wrapper: 'li', selected_class: 'active' } %>
+                <%= nav_link 'Last Month', filtered_shifts_path('monthly', beginning_of_last_month, end_of_last_month), {},
+                { wrapper: 'li', selected_class: 'active' } %>
               </ul>
             </li>
-            <li class="<%= in_path?("projects", "tasks") %>" ><%= link_to 'Projects & Tasks', projects_path %></li>
+            <%= nav_link 'Projects & Tasks', projects_path, {},
+            { wrapper: 'li' } %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li class="<%= in_path?("reports/new") %>"><%= link_to 'New', reports_new_path %></li>
+                <%= nav_link 'New', reports_new_path, {},
+                { wrapper: 'li', selected_class: 'active' } %>
                 <li class="divider"></li>
-                <li class="<%= in_path?("reports/create") %>"><%= link_to 'This Week', reports_create_path(date1: beginning_of_this_week, date2: end_of_this_week) %></li>
-                <li class="<%= in_path?("reports/create") %>"><%= link_to 'Last Week', filtered_shifts_path('weekly', beginning_of_last_week, end_of_last_week) %></li>
-                <li class="<%= in_path?("reports/create") %>"><%= link_to 'Last Two Weeks', filtered_shifts_path('bi-weekly', beginning_of_last_week, Date.today) %></li>
-                <li class="divider"></li>
-                <li class="<%= in_path?("reports/create") %>"><%= link_to 'This Month', filtered_shifts_path('monthly', Date.today.at_beginning_of_month, Date.today.at_end_of_month) %></li>
-                <li class="divider"></li>
+                <%#= nav_link 'This Week', reports_path(@this_weeks_report), {method: :post},
+                { wrapper: 'li', selected_class: 'active' } %>
+                <%#= nav_link 'Last Week', filtered_shifts_path('weekly', beginning_of_last_week, end_of_last_week), {},
+                { wrapper: 'li', selected_class: 'active' } %>
+                <%#= nav_link 'Last Two Weeks', filtered_shifts_path('bi-weekly', beginning_of_last_week, Date.today), {},
+                { wrapper: 'li', selected_class: 'active' } %>
+                <!-- <li class="divider"></li> -->
+                <%#= nav_link 'This Month', filtered_shifts_path('monthly', Date.today.at_beginning_of_month, Date.today.at_end_of_month), {},
+                { wrapper: 'li', selected_class: 'active' } %>
+                <!-- <li class="divider"></li> -->
               </ul>
             </li>
           </ul>
@@ -57,7 +69,12 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello, <%= @current_user.username if @current_user %><%= ' (Administrator)' if @current_user && @current_user.is_admin %><span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><%= link_to "Logout", logout_path, method: :delete %></li>
+                <% if @current_user && @current_user.is_admin %>
+                <%= nav_link "Administer Users", users_path, {},
+                { wrapper: 'li', selected_class: 'active' }  %>
+                <% end %>
+                <%= nav_link "Logout", logout_path, { method: :delete },
+                { wrapper: 'li', selected_class: 'active' }  %>
               </ul>
             </li>
           </ul>

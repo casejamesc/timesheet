@@ -26,6 +26,7 @@ class ProjectsController < ApplicationController
     
     respond_to do |format|
       if @project.save
+        format.html { redirect_to projects_path, notice: @project.name + ' was successfully created.' }
         format.js
       else
         format.html { render action: 'new' }

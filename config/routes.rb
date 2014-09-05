@@ -8,14 +8,12 @@ Timesheet::Application.routes.draw do
 
   resources :users, :except => [:show]
 
-  get ":filter/:sub_filter/shifts/:date1/:date2", :to => "shifts#index", as: "filtered_shifts_sub"
   get ":filter/shifts/:date1/:date2", :to => "shifts#index", as: "filtered_shifts"
   resources :shifts, :except => [:show]
 
   controller :reports do
-    get '/reports/new' => :new
-    post '/reports/create' => :create
-    # post '/reports/create?:qparams' => :create
+    get '/reports/new' => :new, as: "reports_new"
+    post '/reports' => :create, as: "reports"
   end
 
   get "tasks/retreive_tasks", :to => "tasks#retreive_tasks"
@@ -23,7 +21,7 @@ Timesheet::Application.routes.draw do
 
   resources :projects, :except => [:show]
 
-  match "*rest" => "sessions#rest", via: [:get, :post]
+  match "*catchall" => "sessions#catchall", via: [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

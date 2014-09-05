@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   skip_before_filter :authorize_user
 
   def new
+    # also the option to create new user on this page
     @user = User.new
   end
 
@@ -14,7 +15,7 @@ class SessionsController < ApplicationController
         session[:is_admin] = true
         redirect_to users_path
       else
-        redirect_to filtered_shifts_sub_path('daily', 'today', Date.today, Date.today)
+        redirect_to filtered_shifts_path('daily', Date.today, Date.today)
       end
     else
       redirect_to root_url, notice: "Invalid user/password combination"
@@ -26,7 +27,7 @@ class SessionsController < ApplicationController
     redirect_to root_url, notice: "Logged out"
   end
 
-  def rest
+  def catchall
     redirect_to root_url, notice: "Please log in"
   end
 end

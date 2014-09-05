@@ -43,11 +43,15 @@ input[type="checkbox"] {
 	.main-header-top {
 		height: 100px;
 		padding: 1px 0;
-	}	
+	}
 	.logo {
 		float: none;
+		display: block;
 		width: 300px;
 		margin: 20px auto 0 auto;
+		&:hover {
+			text-decoration: none;
+		}
 		span {
 			margin-left: 5px;
 			@extend .text-x;
@@ -549,3 +553,15 @@ table {
 		float: right;
 	}
 }
+
+// USERS-INDEX
+.users-index {
+	.edit {
+		width: 80px;
+		img {
+			width: 30px;
+		}
+	}
+}
+
+

@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  skip_before_filter :authorize_user
+  skip_before_action :authorize_user
 
   before_action :authorize_admin, except: [:create]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -23,14 +23,15 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+
     respond_to do |format|
       if @user.save
-        format.html { 
-          if params[:from] = 'sign-up'
+        format.html {
+          if params[:from] === 'sign-up'
             session[:user_id] = @user.id
-            redirect_to filtered_shifts_sub_path('daily', 'today', Date.today, Date.today), notice: 'Thank you for joining Shiftkeeper!' 
+            redirect_to filtered_shifts_path('daily', Date.today, Date.today), notice: 'Thank you for joining Shiftkeeper!' 
           else
-            redirect_to users_url, notice: 'User was successfully created.' 
+            redirect_to users_url, notice: @user.username + ' was successfully created.' 
           end
         }
         format.json { render action: 'show', status: :created, location: @user }
@@ -51,7 +52,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to users_url, notice: 'User was successfully updated.' }
+        format.html { redirect_to users_url, notice: @user.username + ' was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

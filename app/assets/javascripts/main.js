@@ -40,7 +40,15 @@ $(function() {
     this.setHours(this.getHours() + 6);
   };
   Date.prototype.format = function() {
-     return '' + this.getFullYear() + '-' + (this.getMonth() + 1) + '-' + this.getDate() + '';
+    var year = this.getFullYear();
+
+    var month = this.getMonth() + 1;
+    if ( month < 10 ) { month = '0' + month; }
+
+    var day = this.getDate();
+    if ( day < 10 ) { day = '0' + day; }
+
+    return year + '-' + month + '-' + day;
   };
 
   // ********* INITIALIZATION *********
@@ -90,8 +98,9 @@ $(function() {
           end = end.endOfMonth();
           break;
         }
-        
+
         window.location = '/' + $('#filter').val() + '/shifts/' + beg.format() + '/' + end.format();
+        
       }
     });
   }
@@ -154,7 +163,6 @@ $(function() {
   });
   // UPDATE TASKS
   $('.rt-project').on('change', function(e) {
-    console.log('hey');
     var project = $(this);
     var rt_container = project.closest('.rt-pair');
     var task = rt_container.find('.rt-task');
@@ -218,56 +226,57 @@ $(function() {
   // *** REPORTS ***
   function enableDisableProjects(checkbox) {
     if ( checkbox.is(':checked') ) {
-      $('#project_id').removeClass('disabled');
+      $('#report_project_id').removeClass('disabled');
     } else {
-      $('#project_id').addClass('disabled');
+      $('#report_project_id').addClass('disabled');
     }
   }
 
   function enableDisableTasks(checkbox) {
     if ( checkbox.is(':checked') ) {
-      $('#task_id').removeClass('disabled');
+      $('#report_task_id').removeClass('disabled');
     } else {
-      $('#task_id').addClass('disabled');
+      $('#report_task_id').addClass('disabled');
     }
   }
 
-  $('.reports-new #project_filter, .reports-create #project_filter').on('change', function() {
+  $('#report_project_filter').on('change', function() {
     enableDisableProjects($(this));
   });
 
-  $('.reports-new #task_filter, .reports-create #task_filter').on('change', function() {
+  $('#report_task_filter').on('change', function() {
     enableDisableTasks($(this));
   });
 
   function populateEmailAddress() {
-    $('#email_address').val( $('#project_id :selected').data('email') );
+    $('#report_email').val( $('#report_project_id :selected').data('email') );
+    console.log('hu');
   }
 
-  $('.reports-create #project_id').on('change', function() {
+  $('#report_project_id').on('change', function() {
     populateEmailAddress();
   });
 
   // SUBMIT FORM TO DIFFERENT ACTIONS
-  $('.new-report input[type=submit]').on('click', function(e) {
+  $('.new_report input[type=submit]').on('click', function(e) {
     if ( $(this).val() == 'Preview' ) {
-      $('.new-report').attr('target', "_blank");
-      $('.new-report').removeAttr('data-remote');
-      $('.new-report').attr('action', '/reports/create.pdf');
+      $('.new_report').attr('target', "_blank");
+      $('.new_report').removeAttr('data-remote');
+      $('.new_report').attr('action', '/reports.pdf');
     } else if ( $(this).val() == 'Email' ) {
-      $('.new-report').removeAttr('target');
-      $('.new-report').attr('data-remote', true);
-      $('.new-report').attr('action', '/reports/create.json');
+      $('.new_report').removeAttr('target');
+      $('.new_report').attr('data-remote', true);
+      $('.new_report').attr('action', '/reports.json');
     } else {
-      $('.new-report').removeAttr('target');
-      $('.new-report').removeAttr('data-remote');
-      $('.new-report').attr('action', '/reports/create.html');
+      $('.new_report').removeAttr('target');
+      $('.new_report').removeAttr('data-remote');
+      $('.new_report').attr('action', '/reports.html');
     }
   });
 
   // INITIALIZATION
-  enableDisableProjects($('.reports-create #project_filter'));
-  enableDisableTasks($('.reports-create #task_filter'));
+  enableDisableProjects($('#report_project_filter'));
+  enableDisableTasks($('#report_task_filter'));
   populateEmailAddress();
 
   // *** PROJECTS/TASKS INDEX ***

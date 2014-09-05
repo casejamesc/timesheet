@@ -1,7 +1,9 @@
 module ApplicationHelper
+  # include NavLinkHelper
 
   def body_class
-    [controller_name, action_name].join('-')
+    @view_name ||= ''
+    [controller_name, action_name].join('-') + ' ' + @view_name
   end
   
   def filter_class
@@ -63,7 +65,7 @@ module ApplicationHelper
   end
 
   def task_link(shift) 
-    shift.task ? ( link_to shift.task.name, edit_task_path(shift.task) ) : ''
+    shift.project && shift.task && shift.task.project === shift.project ? ( link_to shift.task.name, edit_task_path(shift.task) ) : ''
   end
 
   def project_default

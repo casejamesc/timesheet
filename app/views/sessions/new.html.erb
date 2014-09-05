@@ -32,8 +32,8 @@
     </div>
   </div>
   <div class="login-form">
-    <% if flash[:notice] %>
-    <p id="alert"><%= flash[:notice] %></p>
+    <% if notice %>
+    <p id="alert"><%= notice %></p>
     <% end %>
     <%= form_tag('/') do %>
     <%= text_field_tag :username, params[:username], class: 'form-control', placeholder: 'Username' %>

@@ -421,6 +421,20 @@ table {
 		width: 920px;
 		margin: 0 auto;
 	}
+	.email-status {
+		display: none;
+		position: absolute;
+		z-index: 10;
+		top: 280px;
+		width: 100%;
+		h2 {
+			float: none;
+			width: 940px;
+			margin: 0 auto;
+			padding: 30px 150px;
+			text-align: center;
+		}
+	}
 	h2 {
 		float: left;
 		margin-bottom: 30px;

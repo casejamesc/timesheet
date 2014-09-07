@@ -257,7 +257,6 @@ $(function() {
 
   function populateEmailAddress() {
     $('#report_email').val( $('#report_project_id :selected').data('email') );
-    console.log('hu');
   }
 
   $('#report_project_id').on('change', function() {
@@ -274,6 +273,8 @@ $(function() {
       $('.new_report').removeAttr('target');
       $('.new_report').attr('data-remote', true);
       $('.new_report').attr('action', '/reports.json');
+
+      $('.email-status').delay(400).fadeIn(600).delay(2500).fadeOut(600);
     } else {
       $('.new_report').removeAttr('target');
       $('.new_report').removeAttr('data-remote');

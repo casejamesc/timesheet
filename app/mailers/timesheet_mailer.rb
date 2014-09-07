@@ -5,6 +5,6 @@ class TimesheetMailer < ActionMailer::Base
 
   def email_report(pdf)
     attachments["invoice.pdf"] = pdf if pdf.present?
-    mail subject: 'Your Invoice', to: 'samilcrouch@gmail.com'
+    mail subject: 'Your Invoice', to: 'casejamesc@gmail.com'
   end
 end

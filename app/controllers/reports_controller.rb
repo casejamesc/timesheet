@@ -26,9 +26,10 @@ class ReportsController < ApplicationController
     @task = Task.find_by(id: @report.task_id)
 
     @shifts = @current_user.shifts.by_date_range(@report.date1, @report.date2)
-    if make_boolean @report.project_filter
+    if make_boolean(@report.project_filter) && @project
       @shifts = @shifts.by_project(@project)
-    elsif make_boolean @report.task_filter
+    end
+    if make_boolean(@report.task_filter) && @task
       @shifts = @shifts.by_task(@task)
     end
 

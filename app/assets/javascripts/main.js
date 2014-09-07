@@ -274,7 +274,8 @@ $(function() {
       $('.new_report').attr('data-remote', true);
       $('.new_report').attr('action', '/reports.json');
 
-      $('.email-status').delay(400).fadeIn(600).delay(2500).fadeOut(600);
+      $('.email-status h2').text( 'This report has been emailed to ' + $('#report_email').val() );
+      $('.email-status').delay(400).fadeIn(600).delay(2200).fadeOut(600);
     } else {
       $('.new_report').removeAttr('target');
       $('.new_report').removeAttr('data-remote');

@@ -24,7 +24,6 @@ class ReportsController < ApplicationController
     @date2 = @report.date2.to_date
     @project = Project.find_by(id: @report.project_id)
     @task = Task.find_by(id: @report.task_id)
-
     @shifts = @current_user.shifts.by_date_range(@report.date1, @report.date2)
     if make_boolean(@report.project_filter) && @project
       @shifts = @shifts.by_project(@project)
@@ -68,7 +67,7 @@ class ReportsController < ApplicationController
       date1 = beginning_of_last_month
       date2 = end_of_last_month
     end
-    Report.new(project_filter: 0, task_filter: 0, project_id: project_default.id, task_id: task_default(project_default).id, email: '', date1: date1, date2: date2)
+    Report.new(project_filter: "0", task_filter: "0", project_id: project_default.id, task_id: task_default(project_default).id, email: '', date1: date1, date2: date2)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

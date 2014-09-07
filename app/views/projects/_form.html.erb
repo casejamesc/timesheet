@@ -1,5 +1,7 @@
 <div class="panel-body">
   <%= form_for(@project) do |f| %>
+  <%= f.hidden_field :user_id, value: @current_user.id %>
+
   <% if @project.errors.any? %>
   <div id="error_explanation">
     <ul>

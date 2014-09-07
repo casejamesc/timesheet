@@ -130,7 +130,7 @@ $(function() {
 
   // ********* AJAX *********
   // CREATE
-  $('.new_task').on('submit', function(e) {
+  $('.tasks-index .new_task, .projects-index .new_task').on('submit', function(e) {
     //set project-id on task befor submitting
     projectId = $('.projects-table tr.active').data('id');
     $('#task_project_id').val( projectId );

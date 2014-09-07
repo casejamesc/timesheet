@@ -11,7 +11,6 @@
 <body class="<%= body_class %> <%= filter_class %> <%= params[:from] %>">
   <div class="main">
     <header class="main-header">
-      <%= Rails.env %>
       <div class="wrapper">
         <div class="main-header-top">
           <%= link_to filtered_shifts_path('daily', Date.today, Date.today), class: "logo" do %>

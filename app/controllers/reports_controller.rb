@@ -38,7 +38,7 @@ class ReportsController < ApplicationController
       end
       format.json do
         pdf = render_to_string pdf: 'report.pdf', template: 'reports/show.pdf.erb', layout: 'pdf_layout.html.erb'
-        TimesheetMailer.email_report(pdf).deliver
+        TimesheetMailer.email_report(pdf, @report.email).deliver
         render nothing: true
       end
       format.html do

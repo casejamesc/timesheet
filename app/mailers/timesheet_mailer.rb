@@ -3,8 +3,8 @@ class TimesheetMailer < ActionMailer::Base
 
   # locals: { email_address: @email_address, date1: @date1, date2: @date2 }
 
-  def email_report(pdf)
+  def email_report(pdf, recipient)
     attachments["invoice.pdf"] = pdf if pdf.present?
-    mail subject: 'Your Invoice', to: 'casejamesc@gmail.com'
+    mail subject: 'Your Invoice', to: recipient
   end
 end

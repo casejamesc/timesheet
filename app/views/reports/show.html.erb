@@ -36,7 +36,7 @@
           </div>
           <div class="col-sm-6">
             <%#= f.collection_select(:project_id, @projects, :id, :name, {}, { class: "rt-project form-control" }) %>
-            <%= f.select :project_id, options_for_select(@projects.map{ |p| [p.name, p.id, { 'data-email' => p.email } ] } ), { },class: "rt-project form-control" %>
+            <%= f.select :project_id, options_for_select(@projects.map{ |p| [p.name, p.id, { 'data-email' => p.email } ] } ), { }, class: "rt-project form-control" %>
 
           </div>
         </div>

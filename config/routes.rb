@@ -14,6 +14,7 @@ Timesheet::Application.routes.draw do
   controller :reports do
     get '/reports/new' => :new, as: "reports_new"
     post '/reports' => :create, as: "reports"
+    post '/reports/:name' => :create, as: "default_report"
   end
 
   get "tasks/retreive_tasks", :to => "tasks#retreive_tasks"

@@ -34,7 +34,7 @@
         <% dailyShifts = @shifts.by_day(@date1) %>
         <% if dailyShifts.count == 0 %>
         <tr>
-          <td class="date-in"><%= @date1.strftime("%m/%-d/%Y") %></td>
+          <td class="date-in"><%= @date1.strftime("%m/%-d/%Y") if @date1 %></td>
           <td class="clock-in"><em>No shifts</em></td>
           <td class="clock-out"></td>
           <td class="project"></td>
@@ -73,3 +73,5 @@
       </tbody>
     </table>
   </div>
+
+  <% logger.debug 'HEYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY'  %>

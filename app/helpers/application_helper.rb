@@ -1,5 +1,4 @@
 module ApplicationHelper
-  # include NavLinkHelper
 
   def body_class
     @view_name ||= ''
@@ -16,6 +15,10 @@ module ApplicationHelper
       return 'active' if request.fullpath.include?(n)
     end
     ''
+  end
+
+  def make_boolean(str)
+    str == "0" ? false : true
   end
 
   # can also use Date.today.advance(weeks: -1) here

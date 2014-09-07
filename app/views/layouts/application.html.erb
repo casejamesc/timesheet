@@ -52,16 +52,18 @@
                 <%= nav_link 'New', reports_new_path, {},
                 { wrapper: 'li', selected_class: 'active' } %>
                 <li class="divider"></li>
-                <%#= nav_link 'This Week', reports_path(@this_weeks_report), {method: :post},
+                <%= nav_link 'This Week', default_report_path('this_week'), {method: :post},
                 { wrapper: 'li', selected_class: 'active' } %>
-                <%#= nav_link 'Last Week', filtered_shifts_path('weekly', beginning_of_last_week, end_of_last_week), {},
+                <%= nav_link 'Last Week', default_report_path('last_week'), {method: :post},
                 { wrapper: 'li', selected_class: 'active' } %>
-                <%#= nav_link 'Last Two Weeks', filtered_shifts_path('bi-weekly', beginning_of_last_week, Date.today), {},
+                <%= nav_link 'Last Two Weeks', default_report_path('last_two_weeks'), {method: :post},
                 { wrapper: 'li', selected_class: 'active' } %>
-                <!-- <li class="divider"></li> -->
-                <%#= nav_link 'This Month', filtered_shifts_path('monthly', Date.today.at_beginning_of_month, Date.today.at_end_of_month), {},
+                <li class="divider"></li>
+                <%= nav_link 'This Month', default_report_path('this_month'), {method: :post},
                 { wrapper: 'li', selected_class: 'active' } %>
-                <!-- <li class="divider"></li> -->
+                <%= nav_link 'Last Month', default_report_path('last_month'), {method: :post},
+                { wrapper: 'li', selected_class: 'active' } %>
+                <li class="divider"></li>
               </ul>
             </li>
           </ul>

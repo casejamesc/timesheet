@@ -37,8 +37,15 @@ $(function() {
   };
   //javascript creates a local version of datetimes on creation (6 hours behind UTC)
   Date.prototype.correct = function() {
+    // var utc = new Date(this.getUTCFullYear(), this.getUTCMonth(), this.getUTCDate(),  this.getUTCHours(), this.getUTCMinutes(), this.getUTCSeconds());
+    // return utc;
     this.setHours(this.getHours() + 6);
   };
+  var now = new Date();
+  var corrected = now.correct();
+  console.log( now );
+  console.log( corrected );
+
   Date.prototype.format = function() {
     var year = this.getFullYear();
 

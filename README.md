@@ -19,7 +19,7 @@ Gems
   - used gon gem to expose controller variables to main.js file
 
 Model
-  - created non ActiveRecord Model for Reports. This better encapsulated data in the controller, and allowed me to use validations, etc
+  - created non ActiveRecord Model for Reports. This better encapsulated data in the controller, created a resource to create RESTful actions, and allowed me to use validations, etc
   - used model callback to only allow for a single default project and corresponding task at a given time 
 
 Controller

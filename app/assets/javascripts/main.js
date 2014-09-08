@@ -59,6 +59,9 @@ $(function() {
   };
 
   // ********* INITIALIZATION *********
+  // SCROLL REVEAL
+  window.scrollReveal = new scrollReveal();
+
   if (typeof gon != "undefined") {
     var date1 = new Date(gon.date1);
     var date2 = new Date(gon.date2);

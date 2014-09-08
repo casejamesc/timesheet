@@ -13,5 +13,6 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require scrollReveal
 //= require jquery-ui.min
 //= require main

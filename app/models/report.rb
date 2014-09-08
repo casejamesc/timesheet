@@ -8,7 +8,7 @@ class Report
   validates_presence_of :date1, :date2
   validates :email, email_format: { message: "doesn't look like an email address" }
 
-  DEFAULTS = [ :this_week, :last_week, :last_two_weeks, :this_month, :last_month]
+  DEFAULTS = [ :this_week, :last_week, :last_two_weeks, :this_month, :last_month ]
 
   def initialize(attributes = {})
     attributes.each do |name, value|

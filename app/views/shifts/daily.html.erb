@@ -1,7 +1,6 @@
 <% if flash[:notice] %>
 <p id="alert"><%= flash[:notice] %></p>
 <% end %>
-<h1><%= @date1.to_date.strftime("%A - %B %e, %Y") %></h1>
 
 <div class="sidebar">
   <div class="field form-group filter-group">
@@ -13,22 +12,24 @@
 </div>
 
 <div class="main-content">
-<table class="shift-table table table-striped table-hover">
-  <thead>
-    <tr>
-      <th class="edit"></th>
-      <th class="clock-in">Clock in</th>
-      <th class="clock-out">Clock out</th>
-      <th class="project">Project</th>
-      <th class="task">Task</th>
-      <th class="hours">Hours</th>
-      <th class="pay">Pay</th>
-      <th class="action"></th>
-    </tr>
-  </thead>
+  <h1><%= @date1.to_date.strftime("%A - %B %e, %Y") %></h1>
 
-  <tbody>
-    <% @shifts.each do |shift| %>
+  <table class="shift-table table table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="edit"></th>
+        <th class="clock-in">Clock in</th>
+        <th class="clock-out">Clock out</th>
+        <th class="project">Project</th>
+        <th class="task">Task</th>
+        <th class="hours">Hours</th>
+        <th class="pay">Pay</th>
+        <th class="action"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @shifts.each do |shift| %>
       <tr data-id="<%= shift.id %>">
         <td class="edit"><%= link_to image_tag("icon-edit.png"), edit_shift_path(shift) %></td>
         <td class="clock-in"><%= shift.clock_in.strftime("%l:%M %p") if shift.clock_in %></td>
@@ -39,25 +40,25 @@
         <td class="pay"><%= number_to_currency(shift.pay) %></td>
         <td class="action"><%= link_to image_tag("icon-delete.png", :border => 0), shift, method: :delete, data: { confirm: "Are you sure?"}, class: "delete" %></td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= form_for(@new_shift, remote: true) do |f| %>
+  <%= form_for(@new_shift, remote: true) do |f| %>
   <%= f.hidden_field :date_in, value: @date1 %>
   <%= f.hidden_field :date_out, value: @date2 %>
   <%= f.hidden_field :user_id, value: @current_user.id %>
 
   <% if @new_shift.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@new_shift.errors.count, "error") %> prohibited this shift from being saved:</h2>
+  <div id="error_explanation">
+    <h2><%= pluralize(@new_shift.errors.count, "error") %> prohibited this shift from being saved:</h2>
 
-      <ul>
-        <% @new_shift.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
+    <ul>
+      <% @new_shift.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
   <% end %>
 
   <table class="new-shift table table-striped">
@@ -75,5 +76,5 @@
       </tr>
     </tbody>
   </table>
-<% end %>
+  <% end %>
 </div>

@@ -1,11 +1,6 @@
-<h1>
-  <%= @filter.titleize + ' (' + @date1.strftime("%m/%-d/%Y") + ' - ' + @date2.strftime("%m/%-d/%Y") + ')' %>
-  <%= link_to 'New Shift', new_shift_path, class: 'new-top btn btn-success' %>
-</h1>
-
 <div class="sidebar">
   <div class="field form-group filter-group">
-    <%= label_tag 'Select' %>
+    <%= label_tag 'Select', nil, class: 'select-label' %>
     <%= select_tag( :filter, options_for_select( [["Daily", "daily"],["Weekly", "weekly"],["2 weeks", "bi-weekly"],['Monthly', "monthly"]] ) ) %>
   </div>
   
@@ -13,13 +8,17 @@
 </div>
 
 <div class="main-content">
+  <h1>
+    <%= @filter.titleize + ' (' + @date1.strftime("%m/%-d/%Y") + ' - ' + @date2.strftime("%m/%-d/%Y") + ')' %>
+    <%= link_to 'New Shift', new_shift_path, class: 'new-top btn btn-success' %>
+  </h1>
 <table class="shift-table table table-striped table-hover">
   <thead>
     <tr>
       <th class="edit"></th>
       <th class="date-in">Date</th>
-      <th class="clock-in">Clock in</th>
-      <th class="clock-out">Clock out</th>
+      <th class="clock-in">In</th>
+      <th class="clock-out">Out</th>
       <th class="project">Project</th>
       <th class="task">Task</th>
       <th class="hours">Hours</th>

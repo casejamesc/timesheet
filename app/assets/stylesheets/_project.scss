@@ -12,7 +12,21 @@ input[type="checkbox"] {
 	margin-top: 9px;
   outline: none;
 }
-// PROJECTS(TASKS) INDEX
+table {
+	th, td {
+		text-align: left;
+	}
+	td {
+		cursor: default;
+	}
+	.action {
+		text-align: center;
+		img {
+			width: 18px;
+		}
+	}
+}
+/* ============ BY CLASS ============ */
 .table {
 	td {
 		text-overflow: ellipsis;
@@ -21,7 +35,7 @@ input[type="checkbox"] {
 		padding: 8px 7px !important;
 	}
 }
-// FIX BOOTSTRAP RESPONSIVE NAVBAR. USE BOOTSTRAP GEM IN FUTURE TO CUSTOMIZE VARIABLES
+// FIX BOOTSTRAP RESPONSIVE NAVBAR. USE BOOTSTRAP GEM IN FUTURE TO CUSTOMIZE VARIABLES WITH SCSS
 .navbar-nav {
 	float: left !important;
 	margin: 0 !important;
@@ -36,7 +50,7 @@ input[type="checkbox"] {
 	float: right !important;
 	margin-right: 15px !important;
 }
-/* ============ BY CLASS ============ */
+
 .wrapper {
 	padding: 0 40px;
 	min-width: 960px;
@@ -59,6 +73,48 @@ input[type="checkbox"] {
 	font-size: 22px;
 	font-weight: 700;
 }
+
+// CALENDAR
+[data-filter="weekly"] tr:hover td a, [data-filter="weekly"] tr:hover td span {
+	background: $color5 !important;
+}
+[data-filter="bi-weekly"] .hover-style {
+	background: $color5 !important;
+}
+[data-filter="monthly"]:hover td a {
+	background: $color5 !important;
+}
+.ui-datepicker {
+	width: 100%;
+	td.highlight a {
+		background: #99dd73;
+		border: 1px #88a276 solid !important;
+	}
+	.ui-state-active {
+		color: #1c94c4;
+	}
+	.ui-state-hover {
+		color: #1c94c4;
+		background: $color5;
+	}
+	// today's styling
+	.ui-state-highlight {
+		color: hsl(212, 72.7811%, 27%);
+		background: hsl(0, 0%, 98%);
+		border: 1px solid #ccc;
+	}
+}
+.back {
+	float: right;
+	img { 
+		width: 25px;
+	}
+}
+#error_explanation {
+	color: hsl(1, 75%, 50%);
+	font-style: italic;
+}
+
 /* ============ HEADER ============ */
 .main-header {
 	z-index: 2;
@@ -138,65 +194,8 @@ input[type="checkbox"] {
 	width: 27%;
 	margin-top: 69px;
 }
-
 .filter-group {
 	margin: 8px 0 4px;
-}
-
-/* ============ SHARED ============ */
-// CALENDAR
-[data-filter="weekly"] tr:hover td a, [data-filter="weekly"] tr:hover td span {
-	background: $color5 !important;
-}
-[data-filter="bi-weekly"] .hover-style {
-	background: $color5 !important;
-}
-[data-filter="monthly"]:hover td a {
-	background: $color5 !important;
-}
-.ui-datepicker {
-	width: 100%;
-	td.highlight a {
-		background: #99dd73;
-		border: 1px #88a276 solid !important;
-	}
-	.ui-state-active {
-		color: #1c94c4;
-	}
-	.ui-state-hover {
-		color: #1c94c4;
-		background: $color5;
-	}
-	// today's styling
-	.ui-state-highlight {
-		color: hsl(212, 72.7811%, 27%);
-		background: hsl(0, 0%, 98%);
-		border: 1px solid #ccc;
-	}
-}
-.back {
-	float: right;
-	img { 
-		width: 25px;
-	}
-}
-table {
-	th, td {
-		text-align: left;
-	}
-	td {
-		cursor: default;
-	}
-	.action {
-		text-align: center;
-		img {
-			width: 18px;
-		}
-	}
-}
-#error_explanation {
-	color: hsl(1, 75%, 50%);
-	font-style: italic;
 }
 
 /* ============ FOOTER ============ */
@@ -252,6 +251,9 @@ table {
 				height: 100px;
 			}
 		}
+	}
+	.preload {
+		display: none;
 	}
 	.main {
 		background: image-url('bg_grass.jpg') no-repeat;

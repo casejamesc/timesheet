@@ -35,28 +35,22 @@ $(function() {
       0 //0 is equal to last day of next month
     );
   };
-  //javascript creates a local version of datetimes on creation (6 hours behind UTC)
   Date.prototype.correct = function() {
-    // this.setHours(this.getHours() + 6);
-    this.setTime(this.getTime() + this.getTimezoneOffset() * 60000);
+    this.setTime(this.getTime() + this.getTimezoneOffset() * 60000); //convert local time to UTC
   };
-
   Date.prototype.format = function() {
     var year = this.getFullYear();
-
     var month = this.getMonth() + 1;
     if ( month < 10 ) { month = '0' + month; }
-
     var day = this.getDate();
     if ( day < 10 ) { day = '0' + day; }
-
     return year + '-' + month + '-' + day;
   };
 
   // ********* INITIALIZATION *********
   // SCROLL REVEAL
   window.scrollReveal = new scrollReveal();
-
+  // GON VARIABLES
   if (typeof gon != "undefined") {
     var date1 = new Date(gon.date1);
     var date2 = new Date(gon.date2);
@@ -103,9 +97,7 @@ $(function() {
           end = end.endOfMonth();
           break;
         }
-
         window.location = '/' + $('#filter').val() + '/shifts/' + beg.format() + '/' + end.format();
-        
       }
     });
   }

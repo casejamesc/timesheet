@@ -64,3 +64,6 @@ gem 'wkhtmltopdf-binary'
 
 # EMAIL
 gem 'validates_email_format_of'
+
+# AUTOPREFIX VENDOR SPECIFIC RULES (AWESOME!)
+gem "autoprefixer-rails"

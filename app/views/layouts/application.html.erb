@@ -7,15 +7,10 @@
   <%= javascript_include_tag "application" %>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <%= csrf_meta_tags %>
-  <style>
-    .main {
-      background: url('/assets/bg_grass1.jpg') no-repeat;
-      background-size: cover;
-    }
-  </style>
 </head>
 <body class="<%= body_class %> <%= filter_class %> <%= params[:from] %>">
   <div class="main">
+    <img style="width=0;" src="img/bg_grass.jpg" alt="" class="preload">
     <header class="main-header">
       <div class="wrapper">
         <div class="main-header-top">

@@ -1,14 +1,16 @@
-Personal project - self developed Rails application hosted on Heroku
+Personal project - Rails application hosted on Heroku
 
-http://timesheet.casejamesc.com *this is a freely hosted heroku app using a single dyno. The first user to load the site after 30+ minutes will experience a significant initial delay while the dyno spins up
+http://timesheet.casejamesc.com <br>
+**this is a freely hosted heroku app using a single dyno. The first user to load the site after 30+ minutes will experience a significant initial delay while the dyno spins up
 
-Notes:
+##### NOTES:
 
 Front-end
   - javascript heavy application, most interactions take place client-side, passing JSON or javascript through AJAX calls
   Will incorporate Backbone framework in the future
   - extended javascript Date Object to include several methods, including conversion to UTC time
   - worked extensively with jQuery UI Calendar widget. Selecting and highlighting appropriate dates in the calendar
+  - placed controller and action classes on body tag for page-specific styling. Need to add view class to body as well for situations where the action renders a non default view (different name). Will do this with :content_for in appropriate views.
   - created reusable AJAX call for updating tasks when the user changes the corresponding selected project
   - used Bootstrap to build front-end as quickly as possible 
     
@@ -18,7 +20,7 @@ Gems
   - used gon gem to expose controller variables to main.js file
 
 Model
-  - created non ActiveRecord Model for Reports. This better encapsulated data in the controller, and allowed me to use validations, etc
+  - created non ActiveRecord Model for Reports. This better encapsulated data in the controller, created a resource to create RESTful actions, and allowed me to use validations, etc
   - used model callback to only allow for a single default project and corresponding task at a given time 
 
 Controller
@@ -33,7 +35,9 @@ Views
 MVC Patterns
   - was exposed to several situations where I didn't have access to variables or methods because of MVC archetecture, and figured out alternatives
     - no access to session in a model
-    - no access to view helpers in a controller, or controller methods in a view. Not sure if it follows the MVC pattern, but I exposed both to each other after researching solutions
+    - no access to controller variables in a model
+    - no access to view helpers in a controller, or controller methods in a view. Not sure if it follows the MVC pattern, but I exposed both to each other after researching solutions.
+    - placed application logic in controller methods and code that helped to DRY view code helpers
 
 Database
   - converted the project to a postgresql database for deployment on heroku

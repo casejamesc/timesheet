@@ -25,7 +25,7 @@
   </div>
   <div class="field form-group">
     <%= f.label :project %> <%= link_to '+', new_project_path, class: 'new-link' %><br>
-    <%= f.collection_select(:project_id, @current_user.projects, :id, :name, { selected: project_default.id }, { class: "form-control" } ) %>
+    <%= f.collection_select(:project_id, @current_user.projects, :id, :name, { selected: @task.project.id }, { class: "form-control" } ) %>
   </div>
   <div class="checkboxes clearfix">
     <div class="field form-group status-group clearfix">

@@ -49,3 +49,14 @@ Heroku
 Troubleshooting
   - often used chrome dev tools to troubleshoot AJAX and other issues by examining http request and response headers
   - gained significant experience using the console logs to debug - (logger.debug, queries, pdf/email success, etc)
+
+
+![Home Screenshot](https://github.com/casejamesc/timesheet/blob/master/app/assets/images/screenshots/1.jpg "home")
+
+![Shifts Screenshot](https://github.com/casejamesc/timesheet/blob/master/app/assets/images/screenshots/2.jpg "shifts")
+
+![Project-Tasks Screenshot](https://github.com/casejamesc/timesheet/blob/master/app/assets/images/screenshots/3.jpg "projects and tasks")
+
+![Report Screenshot](https://github.com/casejamesc/timesheet/blob/master/app/assets/images/screenshots/4.jpg "report")
+
+![PDF Screenshot](https://github.com/casejamesc/timesheet/blob/master/app/assets/images/screenshots/5.jpg "pdf to email")

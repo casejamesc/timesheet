@@ -1,6 +1,6 @@
 Personal project - Rails application hosted on Heroku
 
-http://timesheet.casejamesc.com <br>
+http://timesheet.casejamesc.com | Username: Casey, Password: pw <br>
 **this is a freely hosted heroku app using a single dyno. The first user to load the site after 30+ minutes will experience a significant initial delay while the dyno spins up
 
 ##### NOTES:
@@ -49,6 +49,8 @@ Heroku
 Troubleshooting
   - often used chrome dev tools to troubleshoot AJAX and other issues by examining http request and response headers
   - gained significant experience using the console logs to debug - (logger.debug, queries, pdf/email success, etc)
+
+
 
 
 ![Home Screenshot](https://github.com/casejamesc/timesheet/blob/master/app/assets/images/screenshots/1.jpg "home")
